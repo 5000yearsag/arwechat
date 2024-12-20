@@ -1,0 +1,88 @@
+<xr-scene ar-system="modes:Marker" bind:ready="handleReady">
+  <xr-assets bind:loaded="handleAssetsLoaded">
+    <block wx:for="{{sceneList}}" wx:key="sceneUuid">
+      <block wx:if="{{item.type === 'video'}}">
+        <xr-asset-load
+          type="video-texture"
+          asset-id="video_{{item.sceneUuid}}"
+          options="loop:true"
+          src="{{item.arResourceUrl}}"
+        />
+        <xr-asset-material
+          wx:if="{{item.videoEffect === 'tsbs'}}"
+          asset-id="mat_{{item.sceneUuid}}"
+          effect="video-tsbs"
+          uniforms="u_baseColorMap:video-video_{{item.sceneUuid}}"
+        />
+        <xr-asset-material
+          wx:else
+          asset-id="mat_{{item.sceneUuid}}"
+          effect="simple"
+          uniforms="u_baseColorMap: video-video_{{item.sceneUuid}}"
+        />
+      </block>
+      <block wx:elif="{{item.type === 'model'}}">
+        <xr-asset-load
+          type="gltf"
+          asset-id="model_{{item.sceneUuid}}"
+          src="{{item.arResourceUrl}}"
+          options="ignoreError: 10602"
+        />
+      </block>
+    </block>
+  </xr-assets>
+
+  <xr-light type="ambient" color="1 1 1" intensity="1" />
+  <xr-light type="directional" rotation="40 70 0" color="1 1 1" intensity="3" cast-shadow />
+
+  <block
+    wx:if="{{assetsLoaded}}"
+    wx:for="{{sceneList}}"
+    wx:key="sceneUuid"
+  >
+    <xr-node id="videoNode" visible="{{visibleVideo}}" wx:if="{{item.type === 'video'}}">
+      <xr-ar-tracker
+        data-asset-id="{{item.type}}_{{item.sceneUuid}}"
+        data-asset-type="{{item.type}}"
+        mode="Marker"
+        id="videoTracker"
+        src="{{item.sceneImgUrl}}"
+        bind:ar-tracker-switch="handleTrackerSwitch"
+      >
+        <xr-mesh
+          wx:if="{{item.videoEffect === 'tsbs'}}"
+          node-id="video-cube-{{item.sceneUuid}}"
+          geometry="cube"
+          material="mat_{{item.sceneUuid}}"
+          scale="{{item.xScale}} 0 {{item.yScale}}"
+        />
+        <xr-mesh
+          wx:else
+          node-id="video-plane-{{item.sceneUuid}}"
+          geometry="plane"
+          material="mat_{{item.sceneUuid}}"
+          scale="{{item.xScale}} 1 {{item.yScale}}"
+        />
+      </xr-ar-tracker>
+    </xr-node>
+    <xr-node wx:elif="{{item.type === 'model'}}">
+      <xr-ar-tracker
+        data-asset-id="{{item.type}}_{{item.sceneUuid}}"
+        data-asset-type="{{item.type}}"
+        mode="Marker"
+        src="{{item.sceneImgUrl}}"
+        bind:ar-tracker-switch="handleTrackerSwitch"
+      >
+        <xr-gltf
+          model="model_{{item.sceneUuid}}"
+          anim-autoplay
+          cube-shape="autoFit:true"
+          position="{{item.position.x || 0}} {{item.position.y || 0}} {{item.position.z || 0}}"
+          scale="{{item.scale.x || 1}} {{item.scale.y || 1}} {{item.scale.z || 1}}"
+          rotation="{{item.rotation.x || 0}} {{item.rotation.y || 0}} {{item.rotation.z || 0}}"
+        />
+      </xr-ar-tracker>
+    </xr-node>
+  </block>
+  <xr-camera id="camera" clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera />
+</xr-scene>

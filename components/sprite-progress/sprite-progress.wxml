@@ -1,0 +1,8 @@
+<!--components/sprite-progress/sprite-progress.wxml-->
+
+<view class="progress-wrap" wx:if="{{showProgress}}">
+  <view class="progress-bg">
+    <progress percent="{{progress}}" duration="300" border-radius="4" activeColor="#FFE8AD" backgroundColor="transparent" stroke-width="8px"/>
+  </view>
+  <image class="sprite" src="https://res.paquapp.com/20222/test/sprite.png" style="left:{{progress}}%;"/>
+</view>

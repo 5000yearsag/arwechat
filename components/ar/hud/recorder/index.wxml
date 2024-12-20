@@ -1,0 +1,9 @@
+<view class="recorder-wrap">
+  <view class="recorder-trigger">
+    <view class="record-core {{status === 3 ? 'rect' : 'circle'}}"></view>
+  </view>
+  <view class="label">
+    <mp-loading wx:if="{{status === 2 || status === 4}}" class="label-loading" show type="dot-white" tips=""></mp-loading>
+    <text>{{label}}</text>
+  </view>
+</view>

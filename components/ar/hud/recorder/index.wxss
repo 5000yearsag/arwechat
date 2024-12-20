@@ -1,0 +1,68 @@
+.recorder-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.recorder-wrap .label {
+  display: inline-flex;
+  width: 100%;
+  height: 56rpx;
+  justify-content: center;
+  align-items: center;
+  gap: 8rpx;
+  border-radius: 72rpx;
+  padding: 2rpx 36rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  line-height: 52rpx;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.recorder-wrap .label .label-loading {
+  width: 96rpx;
+  display: inline-block;
+  align-items: center;
+}
+
+.recorder-wrap .label .label-loading .wx_loading_view .weui-loadingmore {
+  margin: 0;
+}
+
+.recorder-wrap .recorder-trigger {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  border: 8rpx solid #fff;
+  background: transparent;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.recorder-wrap .recorder-trigger:hover {
+  transform: scale(1.03);
+  transition: all 0.2s;
+}
+
+.recorder-wrap .recorder-trigger .record-core {
+  background: #fff;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.recorder-wrap .recorder-trigger .record-core.circle {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.recorder-wrap .recorder-trigger .record-core.rect {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 0;
+}

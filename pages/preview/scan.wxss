@@ -1,0 +1,79 @@
+/* pages/preview/scan.wxss */
+page {
+  background-color: transparent;
+}
+
+.scan-page {
+  background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scan-page .ar-recorder-wrap {
+  position: fixed;
+  left: 50%;
+  bottom: 68rpx;
+  display: inline-flex;
+  transform: translateX(-50%);
+}
+
+.scan-page .logo-watermark {
+  width: 160rpx;
+  height: 280rpx;
+  position: fixed;
+  bottom: 68rpx;
+  right: 48rpx;
+}
+
+.scan-page .page-loading-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.scan-page .scan-img-wrap {
+  width: 675rpx;
+  height: 675rpx;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scan-page .scan-img-wrap .scan-img-tips {
+  position: absolute;
+  min-width: 656rpx;
+  bottom: -96rpx;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 36rpx;
+  font-weight: 500;
+  line-height: 52rpx;
+  text-align: center;
+  letter-spacing: 0px;
+  color: #ffffff;
+}
+
+.scan-page .scan-img-wrap .scan-load-tip {
+  position: absolute;
+  top: -160rpx;
+}
+
+.scan-page .scan-img-wrap .scan-img-loading {
+  animation: keyframes-rotate 3.2s linear infinite;
+}
+
+@keyframes keyframes-rotate {
+  0% {
+    transform-origin: 50% 50%;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
