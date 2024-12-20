@@ -55,18 +55,17 @@ const parseArResourceSpaceParam = (spaceParam) => {
     scale,
   };
 };
-
 Page({
   data: {
     pageLoading: true,
     scanEntryVisible: false,
     errorMessage: "",
-    bannerUrl: "/assets/yao/intro-bg.png",
-    collectionTitle: "AR·耀文化",
-    collectionName: "AR·耀文化",
+    logoImgUrl:"",
+    bgImgUrl: "",
+    brandName: "",
+    collectionName: "",
     description:
-      "探索传统与现代的交融，我们的文创项目致力于将经典文化元素融入日常生活用品，如手工艺品、特色文具、时尚服饰等。每件作品都是对传统文化的一次创新诠释，旨在激发人们对本土文化的兴趣和自豪感，同时提供独特的美学体验。",
-    musicUrl: "http://music.163.com/song/media/outer/url?id=478507889.mp3"
+      "探索传统与现代的交融，我们的文创项目致力于将经典文化元素融入日常生活用品，如手工艺品、特色文具、时尚服饰等。每件作品都是对传统文化的一次创新诠释，旨在激发人们对本土文化的兴趣和自豪感，同时提供独特的美学体验。"
   },
   gotoArScanPage() {
     if (!this.data.scanEntryVisible) {
@@ -111,10 +110,12 @@ Page({
           const { returnCode, returnDesc, data } = res.data || {};
           if (returnCode === 17000) {
             const { sceneInfo, sceneList } = data || {};
-            const { coverImgUrl, collectionName, description } =
+            const { bgImgUrl, coverImgUrl, collectionName, brandName, description } =
               sceneInfo || {};
-            const _coverImgUrl = coverImgUrl || "/assets/banner-bg.png";
+            const _bgImgUrl = bgImgUrl || "/assets/yao/intro-bg.png";
             const _collectionName = collectionName || "";
+            const _brandName = brandName || "";
+            const _logoImgUrl = coverImgUrl || "/assets/logo.png";
             const _description =
               description ||
               "探索传统与现代的交融，我们的文创项目致力于将经典文化元素融入日常生活用品，如手工艺品、特色文具、时尚服饰等。每件作品都是对传统文化的一次创新诠释，旨在激发人们对本土文化的兴趣和自豪感，同时提供独特的美学体验。";
@@ -134,6 +135,7 @@ Page({
                 }
                 */
                 const arResourceType = item.arResourceType || "video";
+                
                 return {
                   sceneUuid: item.sceneUuid,
                   sceneImgUrl: item.sceneImgUrl,
@@ -154,7 +156,9 @@ Page({
             this.setData({
               pageLoading: false,
               errorMessage: "",
-              bannerUrl: _coverImgUrl,
+              bgImgUrl: _bgImgUrl,
+              logoImgUrl: _logoImgUrl,
+              brandName: _brandName,
               collectionName: _collectionName,
               description: _description,
               scanEntryVisible: true,

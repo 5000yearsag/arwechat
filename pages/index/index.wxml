@@ -7,21 +7,21 @@
   </view>
   <block wx:else>
     <view class="bg-layer">
-      <image src="{{bannerUrl}}" mode="aspectFill" />
+      <image src="{{bgImgUrl}}" mode="aspectFill" />
     </view>
     <view class="content-layer">
       <view class="title-wrap">
         <view class="title-arrow-wrap">
           <image src="/assets/yao/title-left.png" />
         </view>
-        <text class="title">{{collectionTitle}}</text>
+        <text class="title">{{brandName}}</text>
         <view class="title-arrow-wrap">
           <image src="/assets/yao/title-right.png" />
         </view>
       </view>
       <view class="content">
         <view class="cover-img-wrap">
-          <image src="/assets/logo.png" mode="aspectFit" />
+          <image src="{{logoImgUrl}}" mode="aspectFit" />
         </view>
         <view class="collection-name-wrap">
           <text>{{collectionName}}</text>
