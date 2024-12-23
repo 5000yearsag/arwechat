@@ -50,12 +50,12 @@ Page({
   },
 
   handleRecordStart() {
-    if (this.scene) {
-      const recorderEl = this.selectComponent("#ar-scan-recorder");
-      if (recorderEl && recorderEl.handleRecord) {
-        recorderEl.handleRecordStart(this.scene);
-      }
-    }
+    // if (this.scene) {
+    //   const recorderEl = this.selectComponent("#ar-scan-recorder");
+    //   if (recorderEl && recorderEl.handleRecord) {
+    //     recorderEl.handleRecordStart(this.scene);
+    //   }
+    // }
   },
 
   openShareVideoDialog({ detail }) {

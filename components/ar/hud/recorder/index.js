@@ -1,4 +1,4 @@
-const IDLE_LABEL = "轻触拍照 长按摄影";
+const IDLE_LABEL = "轻触拍照";
 const IDLE_CAPTURE_LABEL = "轻触拍照";
 const IDLE_RECORD_LABEL = "轻触摄影";
 const CAPTURING_LABEL = "拍照中...";
