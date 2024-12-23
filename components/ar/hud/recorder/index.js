@@ -62,6 +62,56 @@ Component({
     },
     // 截屏并分享
     async handleCapture(scene) {
+      // if (scene && scene.share && scene.share.supported) {
+      //   if (this.data.status !== IDLE_STATUS) return;
+      //   this.setData({
+      //     status: CAPTURING_STATUS,
+      //   });
+
+      //   // 默认的截屏配置
+      //   const ShareCaptureDefaultOptions = {
+      //     type: "jpg",
+      //     quality: 0.8,
+      //   };
+
+      //   await scene.share
+      //     .captureToFriends({
+      //       ...ShareCaptureDefaultOptions,
+      //     })
+      //     .finally(() => {
+      //       this.setData({
+      //         status: IDLE_STATUS,
+      //       });
+      //     });
+      // }
+      wx.getSetting({
+        success: async res => {
+          if (!res.authSetting['scope.camera']) {
+            wx.showModal({
+              cancelText: '取消',
+              content: `需要您授权相机权限`,
+              confirmText: '去设置',
+              success(res) {
+                if (res.confirm) {
+                  wx.openSetting({
+                    success(res) {
+                      if (res.authSetting['scope.camera']) {
+                        wx.redirectTo({
+                          url: `/pages/preview/scan`
+                        });
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          } else {
+            await this.doCapture(scene);
+          }
+        }
+      });
+    },
+    async doCapture(scene) {
       console.log("截屏并分享");
       if (scene && scene.share && scene.share.supported) {
         if (this.data.status !== IDLE_STATUS) return;
@@ -71,20 +121,94 @@ Component({
 
         // 默认的截屏配置
         const ShareCaptureDefaultOptions = {
-          type: "jpg",
-          quality: 0.8,
+          type: "jpg"
         };
 
-        await scene.share
-          .captureToFriends({
-            ...ShareCaptureDefaultOptions,
+        wx.showLoading({
+          mask: true,
+        })
+        try {
+          let path = await scene.share.captureToDataURLAsync(ShareCaptureDefaultOptions)
+
+          const { canvas, width, height } = await this.getCanvas()
+          const ctx = canvas.getContext('2d')
+          canvas.width = width
+          canvas.height = height
+
+          const image = await this.createImage(canvas, 'https://res.paquapp.com/20222/test/share-bg.jpeg')
+          ctx.drawImage(image, 0, 0, width, height)
+          const overlapWidth = width - 24 * 3;
+          const overlapHeight = overlapWidth / 2 * 3;
+          const overlap = await this.createImage(canvas, path);
+          const canvasAspect = 2 / 3;
+          const imageAspect = overlap.width / overlap.height;
+          let sourceWidth,
+            sourceHeight,
+            offsetX = 0,
+            offsetY = 0;
+          if (imageAspect > canvasAspect) {
+            sourceHeight = overlap.height;
+            sourceWidth = overlap.height * canvasAspect;
+            offsetX = (overlap.width - sourceWidth) / 2;
+          } else {
+            sourceWidth = overlap.width;
+            sourceHeight = overlap.width / canvasAspect;
+            offsetY = (overlap.height - sourceHeight) / 2;
+          }
+          const x = 12 * 3;
+          const y = 20 * 3;
+          const radius = 8 * 3;
+          ctx.beginPath();
+          ctx.moveTo(x + radius, y);
+          ctx.arcTo(x + overlapWidth, y, x + overlapWidth, y + overlapHeight, radius);
+          ctx.arcTo(x + overlapWidth, y + overlapHeight, x, y + overlapHeight, radius);
+          ctx.arcTo(x, y + overlapHeight, x, y, radius);
+          ctx.arcTo(x, y, x + overlapWidth, y, radius);
+          ctx.closePath();
+          ctx.clip();
+
+
+          ctx.drawImage(overlap, offsetX, offsetY, sourceWidth, sourceHeight,
+            x, y, overlapWidth, overlapHeight)
+
+          const merged = await wx.canvasToTempFilePath({
+            canvas: canvas,
           })
-          .finally(() => {
-            this.setData({
-              status: IDLE_STATUS,
-            });
-          });
+          wx.hideLoading()
+          this.triggerEvent('showPoster', merged.tempFilePath);
+        } catch (error) {
+          wx.hideLoading();
+          console.log(error);
+          if (error.errno === 103) {
+            this.triggerEvent('shareError', error);
+          }
+        }
+        this.setData({
+          status: IDLE_STATUS,
+        });
       }
+    },
+    createImage(canvas, src) {
+      return new Promise((resolve, reject) => {
+        const image = canvas.createImage()
+        image.onload = () => {
+          resolve(image)
+        }
+        image.src = src
+      })
+    },
+    getCanvas() {
+      return new Promise((resolve, reject) => {
+        this.createSelectorQuery()
+          .select('#myCanvas')
+          .fields({ node: true, size: true })
+          .exec((res) => {
+            resolve({
+              ...res[0],
+              canvas: res[0].node,
+            })
+          })
+      })
     },
     // 开始录屏
     async handleRecordStart(scene) {

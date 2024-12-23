@@ -17,6 +17,56 @@ Page({
 
     showShareVideoDialog: false,
     shareVideoFilePath: "",
+
+    showPoster: false,
+    posterPath: "",
+  },
+  handleShowPoster(e) {
+    console.log('handleShowPoster', e.detail);
+    this.setData({
+      posterPath: e.detail,
+      showPoster: true,
+    })
+  },
+  handleMaskTappedPoster(e) {
+    this.setData({
+      posterPath: "",
+      showPoster: false,
+    })
+  },
+  handleShare(e) {
+    console.log('handleShare', this.data.posterPath);
+
+    wx.showShareImageMenu({
+      path: this.data.posterPath,
+      success: (e) => {
+        
+      },
+      fail: (e) => {
+        console.log(e,  '========>>');
+        this.handleShareError(e);
+      }
+    });
+  },
+  handleShareError(e) {
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.showModal({
+            cancelText: '取消',
+            content: `需要您授权相册权限`,
+            confirmText: '去设置',
+            success(res) {
+              if (res.confirm) {
+                wx.openSetting({
+                  success(res) {}
+                });
+              }
+            }
+          });
+        }
+      }
+    });
   },
 
   handleArTrackerReady({ detail }) {

@@ -85,3 +85,46 @@ page {
     transform: rotate(360deg);
   }
 }
+
+
+.poster-mask {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.poster-content {
+    position: absolute;
+    top: 200rpx;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.share-pic {
+  width: 590rpx;
+  height: 1063rpx;
+  margin-bottom: 36rpx;
+  border-radius: 32rpx;
+}
+.share-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 36rpx;
+ }
+.share-btn {
+    width: 282rpx;
+    height: 88rpx;
+    color: #F7DDBD;
+    font-weight: 500;
+    font-size: 28rpx;
+    line-height: 88rpx;
+    text-align: center;
+    background: #8A3120;
+    border-radius: 45rpx;
+    border: 1px solid #E0C5A6;
+}
+.share-btn:first-child {
+    margin-right: 16rpx;
+    background: transparent;
+}

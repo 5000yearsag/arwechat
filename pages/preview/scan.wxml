@@ -39,7 +39,15 @@
     </view>
     <block>
       <view class="ar-recorder-wrap">
-        <ar-recorder id="ar-scan-recorder" type="all" bind:tap="handleRecord" bind:longpress="handleRecordStart" bind:openShareVideoDialog="openShareVideoDialog" />
+        <ar-recorder
+          id="ar-scan-recorder"
+          type="all"
+          bind:tap="handleRecord" 
+          bind:longpress="handleRecordStart"
+          bind:openShareVideoDialog="openShareVideoDialog"
+          bind:showPoster="handleShowPoster"
+          bind:shareError="handleShareError"
+        />
       </view>
       <mp-half-screen-dialog 
         show="{{showShareVideoDialog}}"
@@ -55,4 +63,14 @@
       </mp-half-screen-dialog>
     </block>
   </block>
+
+  <view wx:if="{{showPoster}}" class="poster-mask" >
+    <view class="poster-content">
+      <image class="share-pic" src="{{posterPath}}" mode="heightFix"/>
+      <view class="share-btn-group" >
+        <view class="share-btn" bind:tap="handleMaskTappedPoster">返回</view>
+        <view class="share-btn" catch:tap="handleShare">去分享</view>
+      </view>
+    </view>
+  </view>
 </view>
