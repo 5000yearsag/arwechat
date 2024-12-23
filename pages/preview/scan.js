@@ -27,9 +27,11 @@ Page({
   },
 
   handleArAssetsLoaded() {
-    this.setData({
-      arAssetsLoaded: true,
-    });
+    this.selectComponent('.sprite-progress').dismiss(() => {
+      this.setData({
+        arAssetsLoaded: true,
+      });
+    })
   },
 
   handleCatchAsset({ detail }) {
