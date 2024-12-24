@@ -1,3 +1,5 @@
+const appInstance = getApp();
+
 const IDLE_LABEL = "轻触拍照";
 const IDLE_CAPTURE_LABEL = "轻触拍照";
 const IDLE_RECORD_LABEL = "轻触摄影";
@@ -134,8 +136,7 @@ Component({
           const ctx = canvas.getContext('2d')
           canvas.width = width
           canvas.height = height
-
-          const image = await this.createImage(canvas, 'https://res.paquapp.com/20222/test/share-bg.jpeg')
+          const image = await this.createImage(canvas, appInstance.globalData.shareImgUrl)
           ctx.drawImage(image, 0, 0, width, height)
           const overlapWidth = width - 24 * 3;
           const overlapHeight = overlapWidth / 2 * 3;

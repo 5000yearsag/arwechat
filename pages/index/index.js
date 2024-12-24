@@ -150,8 +150,8 @@ Page({
                   scale,
                 };
               });
-
             appInstance.globalData.sceneList = _sceneInfoList;
+            appInstance.globalData.shareImgUrl = sceneInfo.shareImgUrl
 
             this.setData({
               pageLoading: false,
