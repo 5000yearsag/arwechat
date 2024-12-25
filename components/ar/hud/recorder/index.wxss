@@ -44,6 +44,10 @@
   overflow: hidden;
 }
 
+.recorder-wrap .recorder-trigger-hide {
+  opacity: 0;
+}
+
 .recorder-wrap .recorder-trigger:hover {
   transform: scale(1.03);
   transition: all 0.2s;
@@ -65,4 +69,30 @@
   width: 64rpx;
   height: 64rpx;
   border-radius: 0;
+}
+
+.recorder-wrap .btn {
+  display: inline-flex;
+  width: 100%;
+  height: 56rpx;
+  justify-content: center;
+  align-items: center;
+  gap: 8rpx;
+  border-radius: 72rpx;
+  padding: 2rpx 36rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  line-height: 52rpx;
+  text-align: center;
+  color: #fff;
+  /* background: rgba(0, 0, 0, 0.45); */
+}
+
+.recorder-wrap .btn-rotate {
+  transform: rotate(180deg);
+}
+
+.recorder-wrap .btn image {
+  width: 56rpx;
+  height: 56rpx;
 }
