@@ -93,6 +93,9 @@ Page({
   handleRecord() {
     if (this.scene) {
       const recorderEl = this.selectComponent("#ar-scan-recorder");
+      if (recorderEl.__data__.hideBtn) {
+        return
+      }
       if (recorderEl && recorderEl.handleRecord) {
         recorderEl.handleRecord(this.scene);
       }

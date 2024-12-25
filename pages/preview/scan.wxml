@@ -42,7 +42,7 @@
         <ar-recorder
           id="ar-scan-recorder"
           type="all"
-          bind:tap="handleRecord" 
+          bind:handleTap="handleRecord" 
           bind:longpress="handleRecordStart"
           bind:openShareVideoDialog="openShareVideoDialog"
           bind:showPoster="handleShowPoster"

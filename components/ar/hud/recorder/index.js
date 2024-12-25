@@ -33,6 +33,7 @@ Component({
     status: IDLE_STATUS,
     label: IDLE_LABEL,
     openShareMenu: false,
+    hideBtn: false
   },
   observers: {
     "status, type": function (_status, _type) {
@@ -279,5 +280,13 @@ Component({
         },
       });
     },
+    handleBtn () {
+      this.setData({
+        hideBtn: !this.data.hideBtn
+      })
+    },
+    handleTap () {
+      this.triggerEvent("handleTap");
+    }
   },
 });
