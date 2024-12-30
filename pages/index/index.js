@@ -61,8 +61,8 @@ Page({
     scanEntryVisible: false,
     errorMessage: "",
     logoImgUrl:"",
-    bgImgUrl: "",
-    brandName: "",
+    bgImgUrl: "/assets/yao/intro-bg.png",
+    brandName: "AR · 耀文化",
     collectionName: "",
     description:
       "探索传统与现代的交融，我们的文创项目致力于将经典文化元素融入日常生活用品，如手工艺品、特色文具、时尚服饰等。每件作品都是对传统文化的一次创新诠释，旨在激发人们对本土文化的兴趣和自豪感，同时提供独特的美学体验。"
