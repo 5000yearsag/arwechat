@@ -24,14 +24,16 @@
       <block wx:else>
         <block wx:if="{{!arAssetsLoaded}}">
           <!-- <mp-toptips ext-class="scan-load-tip" msg="AR资源正在加载中..." type="info" show delay="{{0}}"></mp-toptips> -->
-          <image class="scan-img-loading" src="/assets/scan-img.png" mode="aspectFit" />
+          <!-- <image class="scan-img-loading" src="/assets/scan-img2.png" mode="aspectFit" /> -->
+          <image class="scan-img-loading" src="https://yao-1300735383.cos.ap-beijing.myqcloud.com/test/scene/250102/518242_scan-img2.png" mode="aspectFit" />
           <sprite-progress class="sprite-progress" style="width: 50%;"/>
           <text class="scan-img-tips">AR资源正在加载中...</text>
         </block>
         <block wx:else>
           <!-- <mp-toptips ext-class="scan-load-tip" msg="AR资源已加载完毕" type="success" show></mp-toptips> -->
           <block wx:if="{{!catchAsset}}">
-            <image src="/assets/scan-img.png" mode="aspectFit" />
+            <!-- <image src="/assets/scan-img.png" mode="aspectFit" /> -->
+             <image src="https://yao-1300735383.cos.ap-beijing.myqcloud.com/test/scene/250102/518242_scan-img2.png" mode="aspectFit" />
             <text class="scan-img-tips">请保持平稳对准扫描，自动识别中</text>
           </block>
         </block>
