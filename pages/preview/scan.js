@@ -1,4 +1,5 @@
 import "../../assets/effect/effect-tsbs";
+const appInstance = getApp();
 
 // pages/preview/scan.js
 Page({
@@ -36,6 +37,14 @@ Page({
   },
   handleShare(e) {
     console.log('handleShare', this.data.posterPath);
+
+    // 埋点统计
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click3Count`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {}
+    })
 
     wx.showShareImageMenu({
       path: this.data.posterPath,
@@ -77,11 +86,14 @@ Page({
   },
 
   handleArAssetsLoaded() {
-    this.selectComponent('.sprite-progress').dismiss(() => {
-      this.setData({
-        arAssetsLoaded: true,
-      });
-    })
+    // this.selectComponent('.sprite-progress').dismiss(() => {
+    //   this.setData({
+    //     arAssetsLoaded: true,
+    //   });
+    // })
+    this.setData({
+      arAssetsLoaded: true,
+    });
   },
 
   handleCatchAsset({ detail }) {
@@ -125,6 +137,15 @@ Page({
   },
   shareVideoToMessage() {
     this.hideShareVideoDialog();
+
+    // 埋点统计
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click4Count`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {}
+    })
+
     if (this.scene) {
       const recorderEl = this.selectComponent("#ar-scan-recorder");
       if (

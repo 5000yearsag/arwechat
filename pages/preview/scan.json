@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "sprite-progress": "../../components/sprite-progress/sprite-progress",
     "ar-tracker": "../../components/ar-tracker/index",
     "ar-recorder": "../../components/ar/hud/recorder/index"
   },
