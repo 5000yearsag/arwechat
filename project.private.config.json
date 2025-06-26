@@ -11,14 +11,14 @@
         {
           "name": "场景参数测试",
           "pathName": "pages/index/index",
-          "query": "url=https%3A%2F%2Ftestar.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D241211132842453",
-          "launchMode": "default",
-          "scene": null
+          "query": "url=https%3A%2F%2Ftestar.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D250213134124346",
+          "scene": null,
+          "launchMode": "default"
         },
         {
           "name": "场景参数生产",
           "pathName": "pages/index/index",
-          "query": "url=https%3A%2F%2Fyaoculture.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D241211132842453",
+          "query": "url=https%3A%2F%2Fyaoculture.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D241227171924181",
           "launchMode": "default",
           "scene": null
         },
@@ -39,5 +39,5 @@
       ]
     }
   },
-  "libVersion": "3.3.5"
+  "libVersion": "3.8.9"
 }
