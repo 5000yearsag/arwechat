@@ -11,14 +11,14 @@
         {
           "name": "场景参数测试",
           "pathName": "pages/index/index",
-          "query": "url=https%3A%2F%2Ftestar.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D250213134124346",
+          "query": "url=https%3A%2F%2Ftestar.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D250212154118683",
           "scene": null,
           "launchMode": "default"
         },
         {
           "name": "场景参数生产",
           "pathName": "pages/index/index",
-          "query": "url=https%3A%2F%2Fyaoculture.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D241227171924181",
+          "query": "url=https%3A%2F%2Fyaoculture.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D250529211435008",
           "launchMode": "default",
           "scene": null
         },

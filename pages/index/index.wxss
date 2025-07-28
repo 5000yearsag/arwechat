@@ -183,7 +183,7 @@
 
 .index-page .content-layer .glass-wrap .scan-entry-wrap {
   position: absolute;
-  left: 230rpx;
+  left: 220rpx;
   bottom: 200rpx;
   width: 322rpx;
   height: 300rpx;
@@ -362,4 +362,12 @@
     transform: translate3d(-200%, 0, 0);
     display: none;
   }
+}
+
+.lsjl {
+  position: fixed;
+  /* right: 0; */
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: 160rpx;
 }

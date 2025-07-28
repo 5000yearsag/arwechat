@@ -1,5 +1,10 @@
 {
-  "pages": ["pages/index/index", "pages/preview/scan", "pages/scene-ar-osdmarker/index"],
+  "pages": [
+    "pages/index/index",
+    "pages/preview/scan",
+    "pages/history/index",
+    "pages/scene-ar-osdmarker/index"
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "",

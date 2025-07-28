@@ -52,6 +52,8 @@
           <image src="/assets/yao/scan-entry.png" />
         </view>
       </view>
+
+
       <view class="zoumadeng-wrap">
         <view class="zoumadeng-img-wrap">
           <image src="/assets/yao/zoumadeng.png" />
@@ -60,6 +62,15 @@
         <text class="second-marquee" decode="true">耀文化 · AR新质数字文创赋能者&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
       </view>
     </view>
+
+    <view class="picker">
+      <button bind:tap="goLsjl" class="lsjl" plain="true" type="primary" size="mini">历史记录</button>
+    </view>
+    <!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        <button class="lsjl" plain="true" type="primary" size="mini">历史记录</button>
+      </view>
+    </picker> -->
     <!-- 
     <view class="banner-image-wrap">
       <image src="{{bannerUrl}}" mode="aspectFit" />

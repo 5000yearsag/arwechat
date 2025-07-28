@@ -1,0 +1,30 @@
+<view
+  class="header {{ scrollTop > scrollTopEffect ? 'header2' : ''}}"
+  style="height:{{headerHeight}}px;padding-top:{{headerPaddingTop}}px;box-sizing:content-box;background:{{type === '1' ? 'transparent' : backgroundColor}};"
+>
+  <!-- 返回按钮 -->
+  <view
+    class="header-back"
+    wx:if="{{showBack}}"
+    style="height:{{headerHeight}}px;width:{{headerHeight}}px;top:{{headerPaddingTop}}px;left:{{headerPaddingLeft}}px;"
+    bind:tap="goBack"
+  >
+    <!-- <t-icon
+      name="chevron-left"
+      color="{{ type === '2' ? color : scrollTop > scrollTopEffect ? '#333' : '#fff' }}"
+      size="{{headerHeight / 1.3}}"
+    /> -->
+    <text decode="{{true}}" class="header-fh">&lt;</text>
+  </view>
+  <!-- title -->
+  <text
+    class="header-title"
+    style="color:{{type === '2' ? color : ''}};"
+  >{{ title }}</text>
+</view>
+
+<!-- type 2时候的占位符 -->
+<!-- <view
+  wx:if="{{ type === '2' }}"
+  style="height:{{headerHeight + headerPaddingTop + headerPaddingBottom}}px;"
+/> -->

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的导师",
+  "backgroundTextStyle": "dark",
+  "navigationStyle": "custom",
+  "disableScroll": false,
+  "usingComponents": {
+    "base-header": "/components/base-header/index"
+  }
+}
