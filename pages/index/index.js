@@ -336,6 +336,7 @@ Page({
           console.log(_sceneInfoList)
           appInstance.globalData.sceneList = _sceneInfoList;
           appInstance.globalData.shareImgUrl = sceneInfo.shareImgUrl
+          appInstance.globalData.loadType = sceneInfo.loadType || 0;
 
           this.setData({
             isInitPage: false,
