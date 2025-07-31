@@ -13,11 +13,13 @@ App({
   globalData: {
     openid: '',
     domainWithProtocol: 'https://yaoculture.shenyuantek.com',
+    // domainWithProtocol: 'https://testar.shenyuantek.com',
     openIdApi: '/api/guest/openId',
     statisticApi: '/api/guest/statistic',
     historyRecordApi: '/api/guest/historyRecord',
     historyApi: '/api/guest/history',
     collectionUuid: '',
     sceneList: [],
+    loadType: 0,
   },
 });
