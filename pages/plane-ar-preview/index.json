@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "ar-plane": "../../components/ar-plane/index",
+    "ar-recorder": "../../components/ar/hud/recorder/index"
+  },
+  "disableScroll": true,
+  "renderer": "webview",
+  "navigationStyle": "custom"
+}

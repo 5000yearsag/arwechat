@@ -6,7 +6,7 @@
     </view>
   </view>
   <block wx:else>
-    <view class="bg-layer">
+    <view class="{{bgIsGif ? 'bg-layer' : 'bg-layer-animation'}}">
       <image src="{{bgImgUrl}}" mode="aspectFill" />
     </view>
     <view class="content-layer">
@@ -63,9 +63,9 @@
       </view>
     </view>
 
-    <view class="picker">
+    <!-- <view class="picker">
       <button bind:tap="goLsjl" class="lsjl" plain="true" type="primary" size="mini">历史记录</button>
-    </view>
+    </view> -->
     <!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
       <view class="picker">
         <button class="lsjl" plain="true" type="primary" size="mini">历史记录</button>

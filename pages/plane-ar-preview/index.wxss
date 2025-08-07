@@ -1,0 +1,68 @@
+page {
+  background-color: #000;
+}
+
+.scan-page {
+  background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+}
+
+.controls {
+  position: fixed;
+  left: 50%;
+  bottom: 15%;
+  display: inline-flex;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.recorder-trigger {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  border: 8rpx solid #fff;
+  background: transparent;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.recorder-trigger .record-core {
+  background: #fff;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.recorder-trigger .record-core.circle {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+
+.btn-box {
+  position: absolute;
+  bottom: 100rpx;
+  width: 100%;
+  padding-left: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.btn-box .camera {
+  /* background: #fff; */
+  width: 200rpx;
+  height: 200rpx;
+  /* border-radius: 50%; */
+}
+.btn-box .reset {
+  /* background: #fff; */
+  width: 200rpx;
+  height: 200rpx;
+  /* border-radius: 50%; */
+}

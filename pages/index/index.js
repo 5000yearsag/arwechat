@@ -65,9 +65,11 @@ Page({
     scanEntryVisible: false,
     errorMessage: "",
     logoImgUrl:"",
-    bgImgUrl: "/assets/yao/intro-bg.png",
+    bgImgUrl: "https://yao-1300735383.cos.ap-beijing.myqcloud.com/test/template/241230/310049_99987.png",
     brandName: "AR · 耀文化",
     collectionName: "",
+    bgIsGif: false,
+    collectionType: null, // 0:'图像识别'  1:'平面识别'
     description:
       "探索传统与现代的交融，我们的文创项目致力于将经典文化元素融入日常生活用品，如手工艺品、特色文具、时尚服饰等。每件作品都是对传统文化的一次创新诠释，旨在激发人们对本土文化的兴趣和自豪感，同时提供独特的美学体验。"
   },
@@ -87,9 +89,16 @@ Page({
       })
       return;
     };
-    wx.navigateTo({
-      url: `/pages/preview/scan`,
-    });
+    // 0:'图像识别'   1:'平面识别',
+    if(this.data.collectionType == 1) {
+      wx.navigateTo({
+        url: `/pages/plane-ar-preview/index`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/preview/scan`,
+      });
+    }
   },
   showScanEntry() {
     let scanEntryVisible = false;
@@ -269,9 +278,9 @@ Page({
         const { returnCode, returnDesc, data } = res.data || {};
         if (returnCode === 17000) {
           const { sceneInfo, sceneList } = data || {};
-          const { bgImgUrl, coverImgUrl, collectionName, brandName, description } =
+          const { bgImgUrl, coverImgUrl, collectionName,  collectionType, brandName, description } =
             sceneInfo || {};
-          const _bgImgUrl = bgImgUrl || "/assets/yao/intro-bg.png";
+          const _bgImgUrl = bgImgUrl || "https://yao-1300735383.cos.ap-beijing.myqcloud.com/test/template/241230/310049_99987.png";
           const _collectionName = collectionName || "";
           const _brandName = brandName || "";
           const _logoImgUrl = coverImgUrl || "/assets/logo.png";
@@ -346,6 +355,8 @@ Page({
             logoImgUrl: _logoImgUrl,
             brandName: _brandName,
             collectionName: _collectionName,
+            bgIsGif: _bgImgUrl.toLowerCase().endsWith('.gif'),
+            collectionType: collectionType,
             description: _description,
             scanEntryVisible: true,
           });
