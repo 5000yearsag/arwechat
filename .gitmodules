@@ -1,0 +1,6 @@
+[submodule "ar-platform"]
+	path = ar-platform
+	url = https://github.com/5000yearsag/ar-platform.git
+[submodule "arweb"]
+	path = arweb
+	url = https://github.com/5000yearsag/arweb.git
