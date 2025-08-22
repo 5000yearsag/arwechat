@@ -1,7 +1,6 @@
 const appInstance = getApp();
 
-let innerAudioContext = null
-let innerAudioUrl = null
+let audioContextMap = {} // 存储每个资源的音频上下文
 
 Component({
   data: {
@@ -10,9 +9,14 @@ Component({
     sceneList: [],
   },
   detached () {
-    if (innerAudioContext) {
-      innerAudioContext.stop() // 停止
-    }
+    // 清理所有音频上下文
+    Object.values(audioContextMap).forEach(context => {
+      if (context) {
+        context.stop();
+        context.destroy();
+      }
+    });
+    audioContextMap = {};
   },
   methods: {
     handleReady: function ({ detail }) {
@@ -41,32 +45,38 @@ Component({
       const { assetIndex } = dataset || {};
       const arr = this.data.sceneList[assetIndex]
       console.log(arr)
+      
       arr.map(item => {
         // video
         if (item.type === 'video' && item.sceneUuid) {
           const video = this.scene.assets.getAsset("video-texture", `${item.type}_${item.sceneUuid}`);
           active ? video.play() : video.stop();
         }
-        // mp3
-        if (item.sceneUuid && item.type === "model" && item.audioResourceUrl) {
-          if (!innerAudioContext) {
-            innerAudioContext = wx.createInnerAudioContext({
-              useWebAudioImplement: true // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
-            })
-            innerAudioContext.src = item.audioResourceUrl
-            innerAudioContext.loop = true
+        
+        // 每个资源独立的音频播放（支持叠加播放）
+        if (item.audioResourceUrl && item.sceneUuid) {
+          const contextKey = `${assetIndex}_${item.sceneUuid}`;
+          
+          if (!audioContextMap[contextKey]) {
+            audioContextMap[contextKey] = wx.createInnerAudioContext({
+              useWebAudioImplement: true
+            });
+            audioContextMap[contextKey].src = item.audioResourceUrl;
+            audioContextMap[contextKey].loop = true;
           }
-          if (innerAudioUrl && innerAudioUrl !== item.audioResourceUrl) {
-            innerAudioContext.stop() // 停止
-            innerAudioContext.destroy() // 释放音频资源
-            innerAudioContext = wx.createInnerAudioContext({
-              useWebAudioImplement: true // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
-            })
-            innerAudioContext.src = item.audioResourceUrl
+          
+          // 如果音频URL变化，重新创建
+          if (audioContextMap[contextKey].src !== item.audioResourceUrl) {
+            audioContextMap[contextKey].stop();
+            audioContextMap[contextKey].destroy();
+            audioContextMap[contextKey] = wx.createInnerAudioContext({
+              useWebAudioImplement: true
+            });
+            audioContextMap[contextKey].src = item.audioResourceUrl;
+            audioContextMap[contextKey].loop = true;
           }
-          active ? innerAudioContext.play() : innerAudioContext.pause()
-          innerAudioUrl = item.audioResourceUrl
-          innerAudioContext.loop = true
+          
+          active ? audioContextMap[contextKey].play() : audioContextMap[contextKey].pause();
         }
       })
 

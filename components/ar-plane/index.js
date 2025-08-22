@@ -188,25 +188,49 @@ Component({
       const active = detail.value;
       const { dataset } = target || {};
       const { assetId, assetType, assetMp3 } = dataset || {};
+      
+      // 处理模型音频（兼容旧版本）
       if (assetId && assetType === "model" && assetMp3) {
         if (!innerAudioContext) {
           innerAudioContext = wx.createInnerAudioContext({
-            useWebAudioImplement: true // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
+            useWebAudioImplement: true
           })
           innerAudioContext.src = assetMp3
           innerAudioContext.loop = true
         }
         if (innerAudioUrl && innerAudioUrl !== assetMp3) {
-          innerAudioContext.stop() // 停止
-          innerAudioContext.destroy() // 释放音频资源
+          innerAudioContext.stop()
+          innerAudioContext.destroy()
           innerAudioContext = wx.createInnerAudioContext({
-            useWebAudioImplement: true // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
+            useWebAudioImplement: true
           })
           innerAudioContext.src = assetMp3
         }
         active ? innerAudioContext.play() : innerAudioContext.pause()
         innerAudioUrl = assetMp3
         innerAudioContext.loop = true
+      }
+      
+      // 处理平面数据的音频（新版本）
+      if (this.data.planeData && this.data.planeData.audioResourceUrl) {
+        if (!innerAudioContext) {
+          innerAudioContext = wx.createInnerAudioContext({
+            useWebAudioImplement: true
+          });
+          innerAudioContext.src = this.data.planeData.audioResourceUrl;
+          innerAudioContext.loop = true;
+        }
+        if (innerAudioUrl && innerAudioUrl !== this.data.planeData.audioResourceUrl) {
+          innerAudioContext.stop();
+          innerAudioContext.destroy();
+          innerAudioContext = wx.createInnerAudioContext({
+            useWebAudioImplement: true
+          });
+          innerAudioContext.src = this.data.planeData.audioResourceUrl;
+        }
+        active ? innerAudioContext.play() : innerAudioContext.pause();
+        innerAudioUrl = this.data.planeData.audioResourceUrl;
+        innerAudioContext.loop = true;
       }
     },
     filterGlbResources(list) {
