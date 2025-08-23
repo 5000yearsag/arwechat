@@ -1,9 +1,21 @@
 const appInstance = getApp();
 
+let audioContextMap = {} // 存储每个资源的音频上下文
+
 Component({
   data: {
     assetsLoaded: false,
     sceneList: [],
+  },
+  detached() {
+    // 清理所有音频上下文
+    Object.values(audioContextMap).forEach(context => {
+      if (context) {
+        context.stop();
+        context.destroy();
+      }
+    });
+    audioContextMap = {};
   },
   methods: {
     handleReady: function ({ detail }) {
@@ -32,6 +44,35 @@ Component({
       if (assetId && assetType === "video") {
         const video = this.scene.assets.getAsset("video-texture", assetId);
         active ? video.play() : video.stop();
+      }
+
+      // 每个资源独立的音频播放（支持叠加播放）
+      if (target) {
+        const item = this.data.sceneList.find(sceneData => sceneData.sceneUuid === dataset.sceneUuid);
+        if (item && item.audioResourceUrl && item.sceneUuid) {
+          const contextKey = `${item.sceneUuid}_audio`;
+          
+          if (!audioContextMap[contextKey]) {
+            audioContextMap[contextKey] = wx.createInnerAudioContext({
+              useWebAudioImplement: true
+            });
+            audioContextMap[contextKey].src = item.audioResourceUrl;
+            audioContextMap[contextKey].loop = true;
+          }
+          
+          // 如果音频URL变化，重新创建
+          if (audioContextMap[contextKey].src !== item.audioResourceUrl) {
+            audioContextMap[contextKey].stop();
+            audioContextMap[contextKey].destroy();
+            audioContextMap[contextKey] = wx.createInnerAudioContext({
+              useWebAudioImplement: true
+            });
+            audioContextMap[contextKey].src = item.audioResourceUrl;
+            audioContextMap[contextKey].loop = true;
+          }
+          
+          active ? audioContextMap[contextKey].play() : audioContextMap[contextKey].pause();
+        }
       }
 
       // 埋点统计 - 识别成功播放
