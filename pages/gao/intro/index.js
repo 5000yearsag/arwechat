@@ -17,6 +17,14 @@ Page({
     errorMessage: "",
   },
   onLoad(query) {
+    // 埋点统计 - 页面访问
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=pvCount`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {}
+    })
+
     useQuery(query, {
       onSuccess: (data) => {
         const { sceneInfo, sceneList } = data || {};
@@ -74,6 +82,14 @@ Page({
     });
   },
   gotoCongratsPage() {
+    // 埋点统计 - 进入扫描
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click1Count`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {}
+    })
+
     let url = "/pages/gao/preview/index";
     if (this.data.collectionUuid == '240816163456546') {
       url = "/pages/gao/congrats/index";

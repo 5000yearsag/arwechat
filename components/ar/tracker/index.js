@@ -10,6 +10,14 @@ Component({
       this.scene = detail.value;
       this.triggerEvent("arTrackerReady", detail);
       this.handleSceneData();
+
+      // 埋点统计 - 资源加载
+      wx.request({
+        url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click5Count`,
+        method: "GET",
+        header: { "content-type": "application/json" },
+        success: (res) => {}
+      })
     },
     handleAssetsLoaded: function () {
       this.setData({
@@ -25,6 +33,17 @@ Component({
         const video = this.scene.assets.getAsset("video-texture", assetId);
         active ? video.play() : video.stop();
       }
+
+      // 埋点统计 - 识别成功播放
+      if (active) {
+        wx.request({
+          url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click2Count`,
+          method: "GET",
+          header: { "content-type": "application/json" },
+          success: (res) => {}
+        })
+      }
+
       this.triggerEvent("catchAsset", active);
     },
     handleSceneData: function () {

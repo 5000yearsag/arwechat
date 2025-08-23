@@ -1,6 +1,7 @@
 import "../../../assets/effect/effect-tsbs";
 
 const useXRComponentLoad = require("../../../hooks/useXRComponentLoad");
+const appInstance = getApp();
 
 const timeForamter = (time) => {
   let hour = 0;
@@ -79,6 +80,16 @@ Page({
   },
 
   handleCatchAsset({ detail }) {
+    // 埋点统计 - 识别成功播放
+    if (detail) {
+      wx.request({
+        url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click2Count`,
+        method: "GET",
+        header: { "content-type": "application/json" },
+        success: (res) => {}
+      })
+    }
+
     this.setData({
       catchAsset: detail,
     });
@@ -140,6 +151,14 @@ Page({
     });
   },
   shareVideoToMessage() {
+    // 埋点统计 - 录像分享
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click4Count`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {}
+    })
+
     this.hideShareVideoDialog();
     if (this.data.shareVideoFilePath) {
       wx.shareVideoMessage({
