@@ -12,7 +12,8 @@ App({
   },
   globalData: {
     openid: '',
-    domainWithProtocol: 'https://yaoculture.shenyuantek.com',
+    domainWithProtocol: 'https://app.lanyuxr.com',
+    // domainWithProtocol: 'https://yaoculture.shenyuantek.com', // OLD WRONG DOMAIN
     // domainWithProtocol: 'https://testar.shenyuantek.com',
     openIdApi: '/api/guest/openId',
     statisticApi: '/api/guest/statistic',

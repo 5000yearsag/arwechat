@@ -1,0 +1,86 @@
+<view class="index-page">
+  <mp-toptips msg="{{errorMessage}}" type="error" show="{{errorMessage}}"></mp-toptips>
+  <view wx:if="{{pageLoading}}" class="page-loading-wrap">
+    <view style="width: 100%;">
+      <mp-loading show type="circle" tips="正在加载数据..."></mp-loading>
+    </view>
+  </view>
+  <block wx:else>
+    <view class="{{bgIsGif ? 'bg-layer' : 'bg-layer-animation'}}">
+      <image src="{{bgImgUrl}}" mode="aspectFill" />
+    </view>
+    <view class="content-layer">
+      <view class="title-wrap">
+        <view class="title-arrow-wrap">
+          <image src="/assets/yao/title-left.png" />
+        </view>
+        <text class="title">{{brandName}}</text>
+        <view class="title-arrow-wrap">
+          <image src="/assets/yao/title-right.png" />
+        </view>
+      </view>
+      <view class="content">
+        <view class="cover-img-wrap">
+          <image src="{{logoImgUrl}}" mode="aspectFit" />
+        </view>
+        <view class="collection-name-wrap">
+          <text>{{collectionName}}</text>
+        </view>
+      </view>
+      <!-- <view class="cover-wrap" bindtap="gotoArScanPage">
+        <view class="cover-img-wrap">
+          <image src="/assets/yao/cover-img.png" mode="aspectFit" />
+        </view>
+        <view class="ribbon-wrap">
+          <view class="ribbon-wrap-img-wrap"><image src="/assets/yao/ribbon.png" /></view>
+          <view class="pdd-img-wrap">
+            <image src="/assets/yao/pdd.png" />
+          </view>
+          <view class="yao-wrap">
+            <image src="/assets/yao/yao.png" />
+          </view>
+          <view class="ar-wrap">
+            <image src="/assets/yao/ar.png" />
+          </view>
+          <view class="collection-name-wrap">
+            <text>{{collectionName}}</text>
+          </view>
+        </view>
+      </view> -->
+      <view class="glass-wrap">
+        <view class="scan-entry-wrap" bindtap="gotoArScanPage">
+          <image src="/assets/yao/scan-entry.png" />
+        </view>
+      </view>
+
+
+      <view class="zoumadeng-wrap">
+        <view class="zoumadeng-img-wrap">
+          <image src="/assets/yao/zoumadeng.png" />
+        </view>
+        <text class="first-marquee" decode="true">耀文化 · AR新质数字文创赋能者&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
+        <text class="second-marquee" decode="true">耀文化 · AR新质数字文创赋能者&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
+      </view>
+    </view>
+
+    <!-- <view class="picker">
+      <button bind:tap="goLsjl" class="lsjl" plain="true" type="primary" size="mini">历史记录</button>
+    </view> -->
+    <!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        <button class="lsjl" plain="true" type="primary" size="mini">历史记录</button>
+      </view>
+    </picker> -->
+    <!-- 
+    <view class="banner-image-wrap">
+      <image src="{{bannerUrl}}" mode="aspectFit" />
+    </view>
+    <view class="introduce">{{description}}</view>
+    <view wx:if="{{scanEntryVisible}}" class="scan-entry" bindtap="gotoArScanPage">
+      <view class="scan-entry-btn">
+        <text>扫一扫</text>
+      </view>
+    </view>
+    -->
+  </block>
+</view>

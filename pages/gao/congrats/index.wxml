@@ -1,0 +1,91 @@
+<view class="gao-page congrats-page">
+  <page-bg />
+  <nav-bar divider-color="transparent" />
+  <view class="congrats-content-wrap">
+    <view class="user-info" bindtap="openAuthDialog">
+      <text class="nickname-wrap">{{nickname}}</text>
+      <view
+        class="avatar-wrap"
+      >
+        <image src="{{avatarUrl || '/assets/gao/default-avatar.png'}}" />
+      </view>
+    </view>
+    <view class="congratulation-wrap">
+      <view class="congratulation-bg-wrap">
+        <image src="/assets/gao/glass-top.png" />
+      </view>
+      <view class="congratulation-input-wrap">
+        <view class="to-gao">
+          <text>To </text> 
+          <text class="em">G.A.O：</text>
+        </view>
+        <view class="say-something">
+          <view class="input-bg">
+            <image src="/assets/gao/congrat-input.png" />
+          </view>
+          <input model:value="{{congratulation}}" class="say-input" placeholder="点击输入祝词..." />
+          <!--
+          <view class="say-icon">
+            <mp-icon icon="pencil" size="{{20}}" />
+          </view>
+          -->
+        </view>
+        <view class="to-gao">
+          <text>祝</text><text class="em">8月10日</text><text>开业大GAO！</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="other-congratulations">
+    <view class="other-congratulations-title">GAO友们的祝福：</view>
+    <view class="stripe-wrap">
+      <view class="stripe-img-wrap"><image src="/assets/gao/stripe.png" mode="aspectFill" /></view>
+    </view>
+    <view class="other-congratulations-list">
+      <view wx:for="{{congratulationList}}" wx:key="id" class="other-congratulations-list-item" style="transform: translateX({{item.offset || 0}}rpx)">
+        <view class="avatar">
+          <image src="{{item.avatar || '/assets/gao/guset-avatar.png'}}" />
+        </view>
+        <view class="bubble">
+          <view class="bg">
+            <image src="/assets/gao/message-bubble.png" />
+          </view>
+          <text style="color: {{item.color}}">{{item.message}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="flex-grow: 1;" />
+  <view class="check-in">
+    <view class="scan-entry-wrap" bindtap="gotoScanPage">
+      <image src="/assets/gao/scan-enter.png" />
+    </view>
+    <text>点击签到</text>
+  </view>
+  <mp-half-screen-dialog
+    show="{{showAuthDialog}}"
+    closabled="{{false}}"
+    maskClosable="{{false}}" 
+  >
+    <view slot="title">授权用户头像和昵称</view>
+    <view slot="desc">
+      <mp-cells>
+        <label>
+          <mp-cell>
+            <view slot="icon" style="margin-right: 32rpx;vertical-align: middle;width:72rpx; height: 72rpx; border-raduis: 50%; overflow: hidden"><image src="{{avatarUrl || '/assets/gao/default-avatar.png'}}" style="width:100%;height:100%;" /></view>
+            <button slot="footer" open-type="chooseAvatar" class="weui-btn" type="default" bind:chooseavatar="onChooseAvatar">获取头像</button>
+          </mp-cell>
+        </label>
+        <label>
+          <mp-cell title="昵称">
+            <input class="weui-input" style="margin-left: 32rpx" model:value="{{nickname}}" type="nickname" placeholder="点击获取昵称" />
+          </mp-cell>
+        </label>
+      </mp-cells>
+    </view>
+    <view slot="footer">
+      <button type="default" class="weui-btn" bind:tap="closeAuthDialog">取消</button>
+      <button type="primary" class="weui-btn" bind:tap="onConfirm">保存</button>
+    </view>
+  </mp-half-screen-dialog>
+</view>

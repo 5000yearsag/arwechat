@@ -4,7 +4,11 @@
     "pages/preview/scan",
     "pages/history/index",
     "pages/plane-ar-preview/index",
-    "pages/scene-ar-osdmarker/index"
+    "pages/scene-ar-osdmarker/index",
+    "pages/gao/intro/index",
+    "pages/gao/scan/index",
+    "pages/gao/preview/index",
+    "pages/gao/congrats/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
