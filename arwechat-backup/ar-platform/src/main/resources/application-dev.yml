@@ -24,9 +24,9 @@ dromara:
         enable-storage: true  # 启用存储
         access-key: LTAI5tGryWYdwStSk6StoQPu
         secret-key: TFQEbHHuce10Rr1XMXZI5h7bwsr89R
-        end-point: oss-cn-beijing.aliyuncs.com
-        bucket-name: beijingxr
-        domain: https://beijingxr.oss-cn-beijing.aliyuncs.com/
+        end-point: oss-cn-shanghai.aliyuncs.com
+        bucket-name: lanyuar
+        domain: https://lanyuar.oss-cn-shanghai.aliyuncs.com/
         base-path: test/ # 基础路径
     tencent-cos:
       - platform: tencent-cos-1 # 存储平台标识
