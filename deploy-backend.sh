@@ -114,6 +114,12 @@ ssh "${SERVER_ALIAS}" "cd ${BACKEND_DIR} && \
     mv ${JAR_NAME}-new ${JAR_NAME} && \
     echo '✓ JAR文件已替换' && \
     echo '正在启动新服务...' && \
+    echo '⚠ 注意: 请确保已设置以下环境变量:' && \
+    echo '  ALIYUN_ACCESS_KEY_ID' && \
+    echo '  ALIYUN_ACCESS_KEY_SECRET' && \
+    echo '  ALIYUN_OSS_ENDPOINT (可选)' && \
+    echo '  ALIYUN_OSS_BUCKET_NAME (可选)' && \
+    echo '  ALIYUN_OSS_URL_PREFIX (可选)' && \
     nohup ${JAVA_PATH} -jar ${JAR_NAME} \
         -Xmx1500M -Xms1024M \
         --spring.profiles.active=prod \
