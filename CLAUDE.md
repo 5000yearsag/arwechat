@@ -25,8 +25,6 @@ npm run prettier           # Format code
 ### Backend (Spring Boot)
 ```bash
 cd ar-platform/
-# 设置环境变量（首次运行前）
-source ../setup-env.sh    # 或手动设置环境变量
 mvn spring-boot:run        # Start development server (localhost:9091)
 mvn clean package          # Build JAR
 mvn clean install         # Build and install dependencies
@@ -34,9 +32,6 @@ mvn clean install         # Build and install dependencies
 
 ### Production Deployment
 ```bash
-# 设置生产环境变量（部署前必需）
-source ./setup-env.sh                 # 或手动设置环境变量
-
 # Automated backend deployment (recommended)
 ./deploy-backend.sh                    # Deploy with timestamp version
 ./deploy-backend.sh v1.4-loadtype     # Deploy with custom version tag
@@ -68,43 +63,6 @@ export PATH="/opt/homebrew/opt/node@18/bin:$PATH"  # Switch to Node 18 on macOS
 - **Development**: Remote MySQL at 123.57.231.35:3306/ardb
 - **Production**: Local MySQL at 127.0.0.1:3306/yaoculture
 - **Credentials**: Username `ardb`, Password `LtHenC6MFTRt6GPe`
-
-## Environment Variables Configuration
-
-### Required Environment Variables
-
-Before running the backend service, set the following environment variables:
-
-```bash
-# 阿里云OSS配置（必需）
-export ALIYUN_ACCESS_KEY_ID='你的AccessKeyId'
-export ALIYUN_ACCESS_KEY_SECRET='你的AccessKeySecret'
-
-# 可选配置（有默认值）
-export ALIYUN_OSS_ENDPOINT='oss-cn-beijing-internal.aliyuncs.com'
-export ALIYUN_OSS_BUCKET_NAME='beijingxr'
-export ALIYUN_OSS_URL_PREFIX='https://beijingxr.oss-cn-beijing.aliyuncs.com/'
-```
-
-### Environment Setup Methods
-
-1. **Using .env file** (recommended):
-   ```bash
-   cp arwechat-backup/ar-platform/.env.example arwechat-backup/ar-platform/.env
-   # Edit .env file with actual values
-   source ./setup-env.sh
-   ```
-
-2. **Manual export**:
-   ```bash
-   export ALIYUN_ACCESS_KEY_ID='LTAI5tGryWYdwStSk6StoQPu'
-   export ALIYUN_ACCESS_KEY_SECRET='TFQEbHHuce10Rr1XMXZI5h7bwsr89R'
-   ```
-
-3. **System environment** (production):
-   Add to `/etc/environment` or container configuration
-
-⚠️ **Security Note**: Never commit actual credentials to version control. See `SECURITY.md` for best practices.
 
 ## API Proxy Configuration
 
