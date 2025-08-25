@@ -58,8 +58,8 @@
         <view class="zoumadeng-img-wrap">
           <image src="/assets/yao/zoumadeng.png" />
         </view>
-        <text class="first-marquee" decode="true">耀文化 · AR新质数字文创赋能者&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
-        <text class="second-marquee" decode="true">耀文化 · AR新质数字文创赋能者&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
+        <text class="first-marquee" decode="true">屿岚XR · 创新AR体验&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
+        <text class="second-marquee" decode="true">屿岚XR · 创新AR体验&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;耀文化 ·AR新质数字文创赋能者</text>
       </view>
     </view>
 

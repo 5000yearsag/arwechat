@@ -5,7 +5,7 @@
   <view class="intro-content-wrap">
     <view class="card-container">
     <view class="banner-wrap">
-      <image src="{{coverImgUrl}}" mode="aspectFill" />
+      <image src="{{coverImgUrl}}" mode="aspectFill" bindtap="onBannerTap" />
     </view>
     <view class="description-wrap">{{description}}</view>
     </view>

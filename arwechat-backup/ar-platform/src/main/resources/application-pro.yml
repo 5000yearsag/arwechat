@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: guowenju
+    url: jdbc:mysql://127.0.0.1:3306/yaoculture?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+
+file:
+  env: release
+  server:
+    ip: https://yaoculture.shenyuantek.com/
+    path: /usr/local/www/yaoculture/file/
+
+wx:
+  request:
+    url: https://yaoculture.shenyuantek.com/api/guest/getAllSceneByCollection
+
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: tencent-cos-1 #默认使用的存储平台
+    tencent-cos:
+      - platform: tencent-cos-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        secret-id: AKIDCDAvTnywjIhuvWzFHArPkxzucCrX7c2L
+        secret-key: E0LZhcJn4C9x1zriOvNi1DGFNXZVF0iO
+        region: ap-beijing #存仓库所在地域
+        bucket-name: yao-1300735383
+        domain: https://yao-1300735383.cos.ap-beijing.myqcloud.com/ # 访问域名，注意“/”结尾，例如：https://abc.cos.ap-nanjing.myqcloud.com/
+        base-path: test/ # 基础路径

@@ -131,7 +131,78 @@ npm install --legacy-peer-deps --ignore-scripts
 **原因**: 简化功能，专注核心合集管理
 **位置**: `AddOrEditCollectionModal.tsx` 第317-330行
 
-## 部署流程
+## 快速部署
+
+### 自动化后端部署脚本
+
+项目根目录提供了自动化后端部署脚本 `deploy-backend.sh`，支持一键部署后端服务：
+
+#### 使用方法
+```bash
+# 基本使用 (自动生成时间戳版本)
+./deploy-backend.sh
+
+# 指定版本标识
+./deploy-backend.sh v1.3-loadtype-support
+./deploy-backend.sh hotfix-20250825
+```
+
+#### 脚本功能
+- ✅ **自动构建**: 使用Maven构建后端JAR包
+- ✅ **智能备份**: 自动备份现有JAR文件，文件名包含时间戳
+- ✅ **服务管理**: 自动停止旧服务，启动新服务
+- ✅ **健康检查**: 验证进程状态、端口监听、API响应
+- ✅ **日志监控**: 显示启动日志和运行状态
+- ✅ **错误处理**: 任何步骤失败立即终止并显示错误信息
+
+#### 备份文件命名规则
+- 格式: `vr-platform-backup-[版本标识].jar`
+- 示例: `vr-platform-backup-20250825_151234.jar`
+- 示例: `vr-platform-backup-v1.3-loadtype-support.jar`
+
+#### 部署验证项目
+1. **进程检查**: 确认Java进程正在运行
+2. **端口检查**: 验证8081端口监听状态
+3. **API测试**: 测试统计API响应
+4. **日志检查**: 显示最新启动日志
+
+### 自动化前端部署脚本
+
+项目根目录提供了自动化前端部署脚本 `deploy-frontend.sh`，支持一键部署前端应用：
+
+#### 使用方法
+```bash
+# 基本使用 (自动构建并部署)
+./deploy-frontend.sh
+
+# 指定版本标识
+./deploy-frontend.sh v1.4-loadtype-ui
+
+# 使用现有构建文件 (跳过npm build步骤)
+./deploy-frontend.sh --use-existing
+./deploy-frontend.sh v1.4-ui --use-existing
+```
+
+#### 脚本功能
+- ✅ **环境管理**: 自动切换到Node.js 18并处理npm配置冲突
+- ✅ **智能构建**: 自动构建或使用现有dist文件，构建失败时fallback到现有版本
+- ✅ **智能备份**: 自动备份现有web文件，目录名包含版本标识
+- ✅ **安全部署**: 清理旧文件、解压新版本、设置正确权限
+- ✅ **多重验证**: HTTPS/HTTP访问测试、文件完整性检查
+- ✅ **临时文件清理**: 自动清理本地和服务器临时文件
+
+#### 备份目录命名规则
+- 格式: `web-backup-[版本标识]/`
+- 示例: `web-backup-20250825_153045/`
+- 示例: `web-backup-v1.4-loadtype-ui/`
+
+#### 部署验证项目
+1. **文件检查**: 确认部署文件数量和关键文件存在
+2. **HTTPS测试**: 验证生产环境访问 (端口443)
+3. **HTTP测试**: 验证测试环境访问 (端口7891) 
+4. **权限检查**: 确认文件权限正确设置
+
+## 手动部署流程
 
 ### 前端部署 (ARWeb)
 
@@ -323,16 +394,27 @@ cd /home/back/
 ## 部署历史
 
 ### 最近部署记录
-| 时间 | 版本 | 关键文件 | 变更说明 | 备份位置 |
-|------|------|----------|----------|----------|
-| 2025-08-23 03:20 | v1.2 | `p__Collection__index.26623d4a.async.js` | 修复新建合集参数不匹配问题 | `web_backup_20250823_032032_before_fix` |
-| 2025-08-23 02:34 | v1.1 | `p__Collection__index.2b753385.async.js` | 隐藏合集模板功能，使用Node.js 18构建 | `web_backup_20250822_172211` |
-| 2025-07-30 16:18 | v1.0 | `p__Collection__index.69203f70.async.js` | 初始版本 | - |
+| 时间 | 版本 | 组件 | 变更说明 | 备份文件 |
+|------|------|------|----------|----------|
+| 2025-08-25 15:30 | v1.5 | 前端 | loadType UI支持，自动化前端部署脚本 | `web-backup-20250825_153045/` |
+| 2025-08-25 15:21 | v1.4 | 后端 | 完整loadType功能支持，自动化部署脚本 | `vr-platform-backup-20250825_151234.jar` |
+| 2025-08-23 03:20 | v1.2 | 前端 | 修复新建合集参数不匹配问题 | `web_backup_20250823_032032_before_fix` |
+| 2025-08-23 02:34 | v1.1 | 前端 | 隐藏合集模板功能，使用Node.js 18构建 | `web_backup_20250822_172211` |
+| 2025-07-30 16:18 | v1.0 | 前端 | 初始版本 | - |
 
 ### 重要变更记录
+- **2025-08-25**: 完成前后端loadType功能全栈支持，创建前后端自动化部署脚本体系
 - **2025-08-23**: 解决前后端API参数不匹配问题，新建合集功能恢复正常
 - **2025-08-23**: 统一Node.js 18构建环境，解决构建兼容性问题
 - **2025-08-22**: 暂时隐藏合集模板选择功能
+
+### 自动化部署脚本更新历史
+- **2025-08-25**: 创建完整的自动化部署脚本体系
+  - **后端脚本** `deploy-backend.sh`: Maven构建、JAR备份、服务重启、健康检查
+  - **前端脚本** `deploy-frontend.sh`: Node.js环境管理、智能构建、文件备份、多重验证
+  - **智能备份**: 文件和目录备份均包含版本标识和时间戳
+  - **错误处理**: 任一步骤失败立即终止，保证部署一致性
+  - **环境兼容**: 自动处理Node.js版本切换和npm配置冲突
 
 ## 故障排除
 
@@ -399,7 +481,7 @@ mv application-prod.yml application-pro.yml
 # 方法2: 直接启动 (推荐用于调试)
 pkill -f vr-platform.jar
 nohup /home/jdk/jdk-11.0.22/bin/java -jar vr-platform.jar \
-    --spring.profiles.active=pro \
+    --spring.profiles.active=prod \
     --server.port=8081 > platform.log 2>&1 &
 
 # 验证启动
@@ -473,9 +555,9 @@ tail -20 /home/back/platform.log
 ## 重要注意事项
 
 ### 配置文件匹配
-- **JAR内部配置**: `application-pro.yml`
-- **外部配置文件**: 必须命名为 `application-pro.yml`
-- **启动脚本参数**: `--spring.profiles.active=pro`
+- **JAR内部配置**: `application-prod.yml`
+- **外部配置文件**: 必须命名为 `application-prod.yml`
+- **启动脚本参数**: `--spring.profiles.active=prod`
 
 ### Node.js版本限制
 - **必须使用**: Node.js 18.x
@@ -497,4 +579,168 @@ tail -f /home/back/platform.log | grep "vr-platform start ok"
 
 # 确认端口监听
 ss -tlnp | grep 8081
+```
+
+## 微信小程序CI上传配置
+
+### 环境准备
+
+#### 1. 安装miniprogram-ci
+```bash
+# 在小程序根目录执行
+npm install miniprogram-ci --save
+```
+
+#### 2. 获取代码上传密钥
+1. 登录 [微信公众平台](https://mp.weixin.qq.com/)
+2. 进入开发管理 -> 开发设置
+3. 点击"生成代码上传密钥"
+4. 下载密钥文件，重命名为 `private.key`
+5. 将 `private.key` 放在项目根目录
+
+#### 3. 配置IP白名单
+在微信公众平台的开发设置中，添加你的服务器IP到"代码上传密钥"的IP白名单中。
+
+### CI脚本配置
+
+项目已配置以下文件：
+- `upload.js`: CI上传脚本
+- `package.json`: 添加了上传命令
+- `README-CI.md`: 详细使用文档
+
+### 使用方法
+
+#### 1. 上传小程序到微信后台
+```bash
+# 使用默认版本号和描述上传
+npm run upload
+
+# 指定版本号和描述上传
+node upload.js 1.0.1 "修复bug描述" development
+
+# 参数说明:
+# 参数1: 版本号 (默认: 1.0.0)
+# 参数2: 版本描述 (默认: "版本${version}自动上传")
+# 参数3: 环境 (默认: development, 可选: development|trial|release)
+```
+
+#### 2. 生成预览二维码
+```bash
+# 生成预览二维码用于真机测试
+npm run preview
+
+# 二维码将保存为 preview.jpg
+```
+
+### CI配置详情
+
+#### 项目配置
+- **AppID**: `wx360d6d845e60562e`
+- **项目类型**: miniProgram
+- **项目路径**: 当前目录
+- **私钥路径**: `./private.key`
+
+#### 编译设置
+- ES6转ES5: 启用
+- ES7转ES5: 启用
+- 代码压缩: 启用
+- 代码保护: 关闭
+- JS/WXML/WXSS压缩: 启用
+- WXSS自动补全: 启用
+
+#### 忽略文件列表
+默认忽略以下文件/目录：
+- `node_modules/**/*`
+- `.git/**/*`
+- `upload.js`
+- `private.key`
+
+### 完整小程序部署流程
+
+#### 1. 开发完成后测试
+```bash
+# 在微信开发者工具中完成开发和测试
+# 确保所有功能正常运行
+```
+
+#### 2. 生成预览版本
+```bash
+# 生成预览二维码进行真机测试
+npm run preview
+
+# 使用微信扫描 preview.jpg 进行真机测试
+```
+
+#### 3. 上传正式版本
+```bash
+# 上传到微信后台
+npm run upload
+
+# 或指定详细参数
+node upload.js 1.0.1 "新功能发布：AR音频播放优化" development
+```
+
+#### 4. 微信后台操作
+1. 登录微信公众平台
+2. 进入版本管理页面
+3. 选择刚上传的版本
+4. 设置为体验版或提交审核
+5. 审核通过后发布
+
+### 注意事项
+
+1. **私钥安全**
+   - `private.key` 文件不能提交到版本控制
+   - 确保私钥文件权限正确 (600)
+   - 定期更新上传密钥
+
+2. **版本管理**
+   - 版本号应按语义化版本规范递增
+   - 版本描述要清晰说明变更内容
+   - 保持版本发布记录
+
+3. **IP白名单**
+   - 确保运行CI的IP地址在微信后台白名单中
+   - 如果IP变更需要及时更新白名单
+
+### 错误排查
+
+#### 常见错误
+1. **私钥无效**: 检查`private.key`文件是否正确下载和放置
+2. **IP不在白名单**: 检查微信公众平台的IP白名单设置
+3. **上传失败**: 检查网络连接和项目代码完整性
+4. **版本冲突**: 确保版本号未被使用过
+
+#### 日志查看
+```bash
+# 上传过程会显示详细日志
+# 包括文件检查、压缩、上传进度等信息
+```
+
+### CI集成建议
+
+#### 结合Git工作流
+```bash
+# 示例：基于Git标签自动上传
+#!/bin/bash
+VERSION=$(git describe --tags --abbrev=0)
+COMMIT_MSG=$(git log -1 --pretty=%B)
+
+node upload.js "$VERSION" "$COMMIT_MSG" development
+```
+
+#### 结合部署流程
+```bash
+# 完整部署脚本示例
+#!/bin/bash
+
+# 1. 部署后端和前端
+./deploy-backend.sh
+./deploy-frontend.sh
+
+# 2. 上传小程序
+cd miniprogram/
+npm run upload
+
+echo "全栈部署完成！"
 ```

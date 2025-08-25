@@ -32,11 +32,13 @@ Page({
 
     sceneReady: false,
     arAssetsLoaded: false,
-    assetsLoadPercent: "00.00",
     catchAsset: false,
 
     showShareVideoDialog: false,
     shareVideoFilePath: "",
+
+    showPoster: false,
+    posterPath: "",
 
     navTitle: "",
     congratulation: "",
@@ -52,6 +54,7 @@ Page({
       renderWidth,
       renderHeight,
     });
+    
   },
 
   onUnload() {
@@ -72,12 +75,6 @@ Page({
     });
   },
 
-  handleArAssetsProgress({ detail }) {
-    const { progress } = detail || {};
-    this.setData({
-      assetsLoadPercent: (progress * 100).toFixed(2),
-    });
-  },
 
   handleCatchAsset({ detail }) {
     // 埋点统计 - 识别成功播放
@@ -102,6 +99,57 @@ Page({
         recorderEl.handleRecord(this.scene);
       }
     }
+  },
+
+  handleMaskTappedPoster(e) {
+    this.setData({
+      posterPath: "",
+      showPoster: false,
+    });
+  },
+
+  handleShare(e) {
+    console.log('handleShare', this.data.posterPath);
+
+    // 埋点统计 - 拍照分享
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click3Count`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {}
+    });
+
+    wx.showShareImageMenu({
+      path: this.data.posterPath,
+      success: (e) => {
+        
+      },
+      fail: (e) => {
+        console.log(e, '========>>');
+        this.handleShareError(e);
+      }
+    });
+  },
+
+  handleShareError(e) {
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.showModal({
+            cancelText: '取消',
+            content: `需要您授权相册权限`,
+            confirmText: '去设置',
+            success(res) {
+              if (res.confirm) {
+                wx.openSetting({
+                  success(res) {}
+                });
+              }
+            }
+          });
+        }
+      }
+    });
   },
 
   handleRecordStart() {
@@ -137,6 +185,7 @@ Page({
     this.setData({
       navTitle: "",
     });
+    
     const tempVideoFilePath = detail;
     if (tempVideoFilePath) {
       this.setData({
@@ -151,19 +200,40 @@ Page({
     });
   },
   shareVideoToMessage() {
-    // 埋点统计 - 录像分享
+    console.log("开始分享录屏视频，路径:", this.data.shareVideoFilePath);
+    console.log("当前collectionUuid:", appInstance.globalData.collectionUuid);
+    
+    this.hideShareVideoDialog();
+    
+    // 直接记录统计，不依赖分享结果
+    console.log("记录录屏分享统计（不依赖分享结果）");
     wx.request({
       url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click4Count`,
       method: "GET",
       header: { "content-type": "application/json" },
-      success: (res) => {}
-    })
-
-    this.hideShareVideoDialog();
+      success: (res) => {
+        console.log("录像分享统计记录成功:", res);
+      },
+      fail: (err) => {
+        console.error("录像分享统计记录失败:", err);
+      }
+    });
+    
     if (this.data.shareVideoFilePath) {
       wx.shareVideoMessage({
         videoPath: this.data.shareVideoFilePath,
+        success: () => {
+          console.log("录屏视频分享成功回调执行");
+        },
+        fail: (e) => {
+          console.log("录屏视频分享失败:", e);
+        },
+        complete: () => {
+          console.log("录屏视频分享完成（无论成功失败）");
+        }
       });
+    } else {
+      console.log("没有录屏文件路径，无法分享");
     }
   },
 });

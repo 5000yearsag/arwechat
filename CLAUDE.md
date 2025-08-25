@@ -30,6 +30,27 @@ mvn clean package          # Build JAR
 mvn clean install         # Build and install dependencies
 ```
 
+### Production Deployment
+```bash
+# Automated backend deployment (recommended)
+./deploy-backend.sh                    # Deploy with timestamp version
+./deploy-backend.sh v1.4-loadtype     # Deploy with custom version tag
+
+# Automated frontend deployment (recommended)
+./deploy-frontend.sh                   # Build and deploy with timestamp version
+./deploy-frontend.sh v1.5-ui           # Deploy with custom version tag
+./deploy-frontend.sh --use-existing    # Use existing dist build
+
+# Full stack deployment
+./deploy-backend.sh v1.5-fullstack && ./deploy-frontend.sh v1.5-fullstack
+
+# Manual deployment commands
+cd ar-platform/
+mvn clean package -DskipTests         # Build JAR
+scp target/vr-platform.jar ali_lanyu:/home/back/
+ssh ali_lanyu "cd /home/back && ./start.sh"  # Deploy and restart
+```
+
 ### Full Stack Development
 ```bash
 # From root directory (requires Node.js 18.x)
@@ -69,11 +90,121 @@ All components configured for 100MB file uploads:
 - `components/ar-*`: AR-related components (tracker, plane detection)
 - `pages/scene-ar-*`: AR scene pages with marker tracking
 - `components/xr-*`: XR framework components
-- WeChat AppID: `wxa7aaf8df3c07a824`
+- WeChat AppID: `wx360d6d845e60562e`
 
 ## Recent Changes
 
-- Multi-resource functionality enabled with audio upload support
-- Removed GLB model dependency requirements
-- Unified 100MB file upload limits across all components
-- Local full-stack development environment configured
+- **LoadType Functionality**: Complete support for 普通加载 (loadType: 0) vs 分段加载 (loadType: 1)
+- **Automated Deployment**: Created `deploy-backend.sh` script for one-click backend deployment
+- **Multi-resource functionality**: Audio upload support with AR scene integration
+- **Smart Backup System**: Automatic JAR file backup with timestamp and version tagging
+- **Unified file upload limits**: 100MB across all components
+- **Local full-stack development**: Complete development environment setup
+- **CI/CD Configuration**: miniprogram-ci for automated WeChat Mini Program uploads
+
+## LoadType Feature Support
+
+The application now supports two loading modes for AR resources:
+
+### Loading Types
+- **普通加载 (loadType: 0)**: All AR resources load immediately when scene starts
+- **分段加载 (loadType: 1)**: AR resources load with `defer="true"` attribute for staged loading
+
+### Implementation Stack
+- **Frontend (arweb)**: LoadType selection UI in collection management
+- **Backend (ar-platform)**: Complete API support with database persistence
+- **Mini Program**: XR framework integration with defer attribute support
+- **Database**: `collection_info.load_type` field with proper indexing
+
+## WeChat Mini Program CI Configuration
+
+### Environment Setup
+- **CI Tool**: miniprogram-ci v2.1.26
+- **Upload Script**: `upload.js` with version control and progress tracking
+- **Package Scripts**: `npm run upload`, `npm run preview`
+
+### Usage Commands
+```bash
+# Upload to WeChat backend
+npm run upload                           # Default version upload
+node upload.js 1.0.1 "Version description"  # Custom version upload
+
+# Generate preview QR code
+npm run preview                          # Outputs preview.jpg
+```
+
+### Requirements
+- **Private Key**: Download from WeChat Developer Platform → Development Settings
+- **File Location**: `private.key` in project root directory
+- **IP Whitelist**: Add server IP to WeChat platform whitelist
+- **Project Config**: AppID `wx360d6d845e60562e` configured
+
+### CI Features
+- Automatic file compression and optimization
+- ES6/ES7 compilation support
+- Progress tracking and error handling
+- Ignored files: node_modules, .git, upload scripts
+- Support for development/trial/release environments
+
+## Automated Deployment
+
+### Complete Deployment Script System
+
+The project includes comprehensive deployment automation for both frontend and backend:
+
+### Backend Deployment Script (`deploy-backend.sh`)
+
+#### Features
+- **Automated Build**: Maven build with skip tests
+- **Smart Backup**: Automatic JAR backup with timestamp/version naming
+- **Service Management**: Graceful stop and restart of backend service
+- **Health Validation**: Process, port, and API response verification
+- **Error Handling**: Fail-fast with detailed error messages
+
+#### Usage Examples
+```bash
+./deploy-backend.sh                    # Timestamp-based deployment
+./deploy-backend.sh v1.4-loadtype     # Version-tagged deployment
+./deploy-backend.sh hotfix-20250825   # Custom version deployment
+```
+
+#### Deployment Validation
+- Java process status and resource usage
+- Port 8081 listening verification
+- API endpoint response testing (HTTP 200)
+- Application startup log monitoring
+
+### Frontend Deployment Script (`deploy-frontend.sh`)
+
+#### Features
+- **Environment Management**: Automatic Node.js 18 switching with npm config handling
+- **Smart Build**: Automatic build or fallback to existing dist files
+- **Smart Backup**: Automatic web directory backup with version naming
+- **Safe Deployment**: Clean old files, extract new version, set correct permissions
+- **Multi-Validation**: HTTPS/HTTP access testing, file integrity checks
+- **Cleanup**: Automatic cleanup of temporary files
+
+#### Usage Examples
+```bash
+./deploy-frontend.sh                   # Build and deploy with timestamp
+./deploy-frontend.sh v1.5-ui           # Deploy with custom version tag
+./deploy-frontend.sh --use-existing    # Use existing dist build
+./deploy-frontend.sh v1.5 --use-existing  # Custom version with existing build
+```
+
+#### Deployment Validation
+- File count and key file existence verification
+- HTTPS production environment testing (port 443)
+- HTTP test environment testing (port 7891)
+- File permissions and ownership verification
+
+### Full Stack Deployment
+```bash
+# Sequential deployment with same version tag
+./deploy-backend.sh v1.5-release && ./deploy-frontend.sh v1.5-release
+
+# Parallel deployment for independent components
+./deploy-backend.sh v1.5-api &
+./deploy-frontend.sh v1.5-ui &
+wait
+```

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "调试模式",
+  "usingComponents": {
+    "nav-bar": "/components/nav-bar/index",
+    "mp-loading": "weui-miniprogram/loading/loading",
+    "mp-toptips": "weui-miniprogram/toptips/toptips"
+  }
+}

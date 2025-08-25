@@ -4,10 +4,11 @@ let audioContextMap = {} // 存储每个资源的音频上下文
 
 Component({
   data: {
+    loadType: appInstance.globalData.loadType || 0,
     assetsLoaded: false,
     sceneList: [],
   },
-  detached() {
+  detached () {
     // 清理所有音频上下文
     Object.values(audioContextMap).forEach(context => {
       if (context) {
@@ -22,7 +23,6 @@ Component({
       this.scene = detail.value;
       this.triggerEvent("arTrackerReady", detail);
       this.handleSceneData();
-
       // 埋点统计 - 资源加载
       wx.request({
         url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click5Count`,
@@ -41,14 +41,74 @@ Component({
       const active = detail.value;
       const { dataset } = target || {};
       const { assetIndex } = dataset || {};
-      const arr = this.data.sceneList[assetIndex];
-      console.log(arr);
+      const arr = this.data.sceneList[assetIndex]
       
+      // 分段加载模式下，识别成功后显示加载提示
+      if (active && this.data.loadType === 1) {
+        wx.showLoading({
+          title: '资源加载中...',
+          mask: true
+        });
+        
+        // 检查defer资源是否已加载完成
+        let allResourcesLoaded = true;
+        
+        if (arr && Array.isArray(arr)) {
+          arr.forEach(item => {
+            if (item.type === 'video' && item.sceneUuid) {
+              const video = this.scene.assets.getAsset("video-texture", `video_${item.sceneUuid}`);
+              if (!video || !video.loaded) {
+                allResourcesLoaded = false;
+              }
+            }
+          });
+        }
+        
+        // 如果资源未完全加载，等待加载完成
+        if (!allResourcesLoaded) {
+          const checkResourcesInterval = setInterval(() => {
+            let nowAllLoaded = true;
+            
+            if (arr && Array.isArray(arr)) {
+              arr.forEach(item => {
+                if (item.type === 'video' && item.sceneUuid) {
+                  const video = this.scene.assets.getAsset("video-texture", `video_${item.sceneUuid}`);
+                  if (!video || !video.loaded) {
+                    nowAllLoaded = false;
+                  }
+                }
+              });
+            }
+            
+            if (nowAllLoaded) {
+              clearInterval(checkResourcesInterval);
+              wx.hideLoading();
+              this.playResources(arr, assetIndex, active);
+            }
+          }, 100);
+          
+          // 设置超时，防止无限等待
+          setTimeout(() => {
+            clearInterval(checkResourcesInterval);
+            wx.hideLoading();
+            this.playResources(arr, assetIndex, active);
+          }, 10000);
+          
+          return;
+        } else {
+          wx.hideLoading();
+        }
+      }
+      
+      this.playResources(arr, assetIndex, active);
+    },
+    
+    playResources: function(arr, assetIndex, active) {
       if (arr && Array.isArray(arr)) {
         arr.forEach(item => {
           // video
           if (item.type === 'video' && item.sceneUuid) {
-            const video = this.scene.assets.getAsset("video-texture", `${item.type}_${item.sceneUuid}`);
+            const video = this.scene.assets.getAsset("video-texture", `video_${item.sceneUuid}`);
             if (video) {
               active ? video.play() : video.stop();
             }
@@ -104,9 +164,16 @@ Component({
         // 直接使用已经处理好的数据
         sceneList = appInstance.globalData.sceneList;
       }
-      console.log('AR Tracker接收的场景数据:', sceneList);
+      
+      // 更新loadType（从主分支移植的逻辑）
+      const loadType = appInstance.globalData.loadType || 0;
+      const assetsLoaded = loadType === 1 ? true : this.data.assetsLoaded;
+      
       this.setData({
+        loadType,
         sceneList,
+        // 分段加载模式下，defer资源不需要等待，直接显示AR场景
+        assetsLoaded,
       });
     },
   },

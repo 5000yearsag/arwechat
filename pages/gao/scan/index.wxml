@@ -1,14 +1,13 @@
 <view class="gao-page scan-page">
   <page-bg />
-  <ar-base-tracker
-    id="ar-scan-frame"
+  <ar-tracker
     disable-scroll
+    id="ar-tracker-main-frame"
     width="{{renderWidth}}"
     height="{{renderHeight}}"
     style="width:100vw;height:100vh;"
-    bind:ready="handleSceneReady"
+    bind:arTrackerReady="handleSceneReady"
     bind:arAssetsLoaded="handleArAssetsLoaded"
-    bind:arAssetsProgress="handleArAssetsProgress"
     bind:catchAsset="handleCatchAsset"
   />
   <block wx:if="{{sceneReady}}">
@@ -16,7 +15,7 @@
       <nav-bar text="{{navTitle}}" divider-color="transparent" />
     </view>
     <view wx:if="{{!arAssetsLoaded}}" class="scan-page-loading">
-      <mp-loading show type="circle" tips="正在加载资源：{{assetsLoadPercent}}%"></mp-loading>
+      <mp-loading show type="circle" tips="AR资源正在加载中..."></mp-loading>
     </view>
     <view wx:elif="{{!catchAsset}}" class="scan-frame-wrap">
       <image src="/assets/gao/scan-frame.png" mode="aspectFit" />
@@ -46,6 +45,15 @@
         <button type="primary" class="weui-btn" bind:tap="shareVideoToMessage">分享</button>
       </view>
     </mp-half-screen-dialog>
+    <view wx:if="{{showPoster}}" class="poster-mask" >
+      <view class="poster-content">
+        <image class="share-pic" src="{{posterPath}}" mode="heightFix"/>
+        <view class="share-btn-group" >
+          <view class="share-btn" bind:tap="handleMaskTappedPoster">返回</view>
+          <view class="share-btn" catch:tap="handleShare">去分享</view>
+        </view>
+      </view>
+    </view>
   </block>
   <view wx:else class="scan-page-loading">
     <mp-loading show type="circle" tips="环境准备中..."></mp-loading>

@@ -1,0 +1,34 @@
+=== 快速备份摘要 ===
+备份时间: Thu Aug  7 14:52:54 CST 2025
+备份大小:  24M
+
+=== 备份内容 ===
+✓ 系统配置文件 (用户、主机、SSH等)
+✓ Nginx配置和SSL证书
+✓ MySQL完整数据库导出
+✓ Java应用核心文件
+✓ 重要运维脚本
+✓ 系统信息报告
+
+=== 未包含内容 ===
+- 大型网站文件 (/home/web/, /root/web/)
+- JDK安装包
+- MySQL原始数据文件
+- 日志文件
+
+=== 备份文件清单 ===
+-rw-r--r--@ 1 luche  staff    22M Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/java_apps/java_app_core.tar.gz
+-rw-r--r--@ 1 luche  staff   2.6K Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/system_info.txt
+-rw-r--r--@ 1 luche  staff    30K Aug  7 14:51 ./backup_ali_lanyu_quick_20250807_145154/system/system_configs.tar.gz
+-rw-r--r--@ 1 luche  staff   9.7K Aug  7 14:51 ./backup_ali_lanyu_quick_20250807_145154/nginx/nginx_configs.tar.gz
+-rw-r--r--@ 1 luche  staff   1.2M Aug  7 14:51 ./backup_ali_lanyu_quick_20250807_145154/mysql/all_databases.sql
+-rw-r--r--@ 1 luche  staff   118B Aug  7 14:51 ./backup_ali_lanyu_quick_20250807_145154/mysql/mysql_users.txt
+-rw-r--r--@ 1 luche  staff    62B Aug  7 14:51 ./backup_ali_lanyu_quick_20250807_145154/mysql/database_list.txt
+-rw-r--r--@ 1 luche  staff   494B Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/restart.sh
+-rw-r--r--@ 1 luche  staff   330B Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/checkpy.sh
+-rw-r--r--@ 1 luche  staff    64B Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/ip.sh
+-rw-r--r--@ 1 luche  staff   494B Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/recover.sh
+-rw-r--r--@ 1 luche  staff   1.6K Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/docker-compose.yml
+-rw-r--r--@ 1 luche  staff   225B Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/auto-del-7-days-ago-log.sh
+-rw-r--r--@ 1 luche  staff   255B Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/scripts/start.sh
+-rw-r--r--@ 1 luche  staff   2.0K Aug  7 14:52 ./backup_ali_lanyu_quick_20250807_145154/backup_summary.txt

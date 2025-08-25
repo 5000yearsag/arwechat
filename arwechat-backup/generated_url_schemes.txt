@@ -1,0 +1,26 @@
+微信小程序 URL Scheme 链接 (永久有效)
+生成时间: 2025-01-06
+有效期: 永久有效
+页面: /pages/gao/intro/index
+
+1. collectionUuid=250330012546056
+   weixin://dl/business/?t=Ph8Ieoehmkn
+
+2. collectionUuid=250617200252190
+   weixin://dl/business/?t=sk1a2CooPAn
+
+3. collectionUuid=250224215806036
+   weixin://dl/business/?t=verUwxy1UZl
+
+使用方法:
+- 可以在短信、邮件、网页等场景中使用
+- 点击链接会自动打开微信小程序到指定页面
+- 加密链接，安全性更高
+- 永久有效，无需担心过期问题Generated at Wed Aug  6 00:43:41 CST 2025: weixin://dl/business/?t=rWo3j19XvPp
+Generated at Wed Aug  6 00:45:55 CST 2025 with collectionUuid=250224215806036: weixin://dl/business/?t=3USqX4srXXr
+Generated and verified at Wed Aug  6 00:52:12 CST 2025: weixin://dl/business/?t=hgK5Gw88G0l -> /pages/gao/intro/index?collectionUuid=250224215806036
+=== Batch generated at Wed Aug  6 00:56:46 CST 2025 ===
+1. collectionUuid=250330012546056 -> weixin://dl/business/?t=X69JikT4uUp
+2. collectionUuid=250617200252190 -> weixin://dl/business/?t=7uEl7Vq5ZFh
+3. collectionUuid=250224215806036 -> weixin://dl/business/?t=dkfN7m5UF6t
+

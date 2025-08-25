@@ -1,6 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "ar-recorder": "../../components/ar/hud/recorder/index"
-  }
-}

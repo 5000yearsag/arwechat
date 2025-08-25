@@ -136,25 +136,38 @@ Page({
     });
   },
   shareVideoToMessage() {
+    console.log("开始分享录屏视频，路径:", this.data.shareVideoFilePath);
+    console.log("当前collectionUuid:", appInstance.globalData.collectionUuid);
+    
     this.hideShareVideoDialog();
-
-    // 埋点统计
+    
+    // 直接记录统计，不依赖分享结果
+    console.log("记录录屏分享统计（不依赖分享结果）");
     wx.request({
       url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click4Count`,
       method: "GET",
       header: { "content-type": "application/json" },
-      success: (res) => {}
-    })
-
-    if (this.scene) {
-      const recorderEl = this.selectComponent("#ar-scan-recorder");
-      if (
-        recorderEl &&
-        recorderEl.shareVideoToMessage &&
-        this.data.shareVideoFilePath
-      ) {
-        recorderEl.shareVideoToMessage(this.data.shareVideoFilePath);
+      success: (res) => {
+        console.log("录像分享统计记录成功:", res);
+      },
+      fail: (err) => {
+        console.error("录像分享统计记录失败:", err);
       }
+    });
+
+    if (this.data.shareVideoFilePath) {
+      wx.shareVideoMessage({
+        videoPath: this.data.shareVideoFilePath,
+        success: () => {
+          console.log("share video to message success");
+        },
+        fail: (e) => {
+          console.log("share video to message failed:", e);
+        },
+        complete: () => {
+          console.log("录屏视频分享完成（无论成功失败）");
+        }
+      });
     }
   },
 

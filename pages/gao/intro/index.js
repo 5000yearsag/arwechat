@@ -117,6 +117,12 @@ Page({
           appInstance.globalData.sceneList = [];
           // 设置shareImgUrl，避免截屏功能出错
           appInstance.globalData.shareImgUrl = sceneInfo?.shareImgUrl || "";
+          // 设置loadType，支持分段加载
+          appInstance.globalData.loadType = sceneInfo?.loadType || 0;
+          
+          console.log('设置加载类型 loadType:', appInstance.globalData.loadType);
+          console.log('加载类型说明:', appInstance.globalData.loadType === 0 ? '普通加载（立即加载所有资源）' : '分段加载（识别后加载资源）');
+          
           const _sceneInfoList = (sceneList || [])
             .filter((item) => !!item.sceneImgUrl && !!item.arResourceUrl)
             .map((item) => {

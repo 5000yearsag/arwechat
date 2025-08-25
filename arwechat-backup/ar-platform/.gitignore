@@ -1,0 +1,7 @@
+##ignore this file##
+/target/
+.class
+*.class
+logs
+*.log
+/.idea/

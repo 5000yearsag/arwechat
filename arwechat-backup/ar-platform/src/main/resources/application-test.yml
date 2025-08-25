@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ardb
+    password: LtHenC6MFTRt6GPe
+    url: jdbc:mysql://127.0.0.1:3306/ardb?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+
+
+file:
+  env: trial
+  server:
+    path: /usr/local/www/yaoculture/file/
+    ip: http://123.57.231.35:7891/
+
+wx:
+  request:
+    url: http://123.57.231.35:8081/api/guest/getAllSceneByCollection
+
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: aliyun-oss-1 #默认使用的存储平台
+    aliyun-oss:
+      - platform: aliyun-oss-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: LTAI5tGryWYdwStSk6StoQPu
+        secret-key: TFQEbHHuce10Rr1XMXZI5h7bwsr89R
+        end-point: oss-cn-beijing-internal.aliyuncs.com
+        bucket-name: beijingxr
+        domain: https://beijingxr.oss-cn-beijing.aliyuncs.com/
+        base-path: test/ # 基础路径

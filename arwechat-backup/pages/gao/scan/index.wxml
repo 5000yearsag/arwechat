@@ -1,0 +1,53 @@
+<view class="gao-page scan-page">
+  <page-bg />
+  <ar-base-tracker
+    id="ar-scan-frame"
+    disable-scroll
+    width="{{renderWidth}}"
+    height="{{renderHeight}}"
+    style="width:100vw;height:100vh;"
+    bind:ready="handleSceneReady"
+    bind:arAssetsLoaded="handleArAssetsLoaded"
+    bind:arAssetsProgress="handleArAssetsProgress"
+    bind:catchAsset="handleCatchAsset"
+  />
+  <block wx:if="{{sceneReady}}">
+    <view class="ar-nav-bar-wrap">
+      <nav-bar text="{{navTitle}}" divider-color="transparent" />
+    </view>
+    <view wx:if="{{!arAssetsLoaded}}" class="scan-page-loading">
+      <mp-loading show type="circle" tips="正在加载资源：{{assetsLoadPercent}}%"></mp-loading>
+    </view>
+    <view wx:elif="{{!catchAsset}}" class="scan-frame-wrap">
+      <image src="/assets/gao/scan-frame.png" mode="aspectFit" />
+      <view class="tips">请保持平稳对准扫描，自动识别中</view>
+    </view>
+    <view class="ar-recorder-wrap">
+      <ar-recorder
+        id="ar-scan-recorder"
+        type="all"
+        holding
+        bind:tap="handleRecord"
+        bind:longpress="handleRecordStart"
+        bind:touchend="handleRecordStop"
+        bind:recordStarted="recordStarted"
+        bind:recordFinished="recordFinished"
+      />
+    </view>
+    <mp-half-screen-dialog 
+      show="{{showShareVideoDialog}}"
+      closabled="{{false}}"
+      maskClosable="{{false}}" 
+    >
+      <view slot="title">分享视频</view>
+      <view slot="desc">点击分享按钮将刚刚拍摄的视频发送给好友吧！</view>
+      <view slot="footer">
+        <button type="default" class="weui-btn" bind:tap="hideShareVideoDialog">取消</button>
+        <button type="primary" class="weui-btn" bind:tap="shareVideoToMessage">分享</button>
+      </view>
+    </mp-half-screen-dialog>
+  </block>
+  <view wx:else class="scan-page-loading">
+    <mp-loading show type="circle" tips="环境准备中..."></mp-loading>
+  </view>
+</view>

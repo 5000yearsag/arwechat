@@ -1,0 +1,56 @@
+version: '3'
+services:
+  mysql:    
+    image: registry.cn-hangzhou.aliyuncs.com/cloudm/mysql:s22s2001v1       
+    container_name: mysql                                                     
+    environment:
+      NAME: "mysql"
+      MYSQL_ROOT_PASSWORD: "1q2w3E$R"                                   
+    ports:
+      - "3306:3306"                                                    
+    restart: always                                                                    
+    volumes:
+      - "/data/mysql:/var/lib/mysql"
+    logging:
+      driver: "none"
+  java-master:
+    image: registry.cn-hangzhou.aliyuncs.com/cloudm/cms:v2
+    container_name: java-master
+    ports:
+      - "8082:8082"
+    restart: always
+    volumes:
+      - "/data/logs:/logs"
+      - "/data/ehcache:/data/ehcache"
+      - "/etc/yml:/etc/yml"
+      - "/backup:/backup"
+      - "/var/lib/cloud/data/instance-id:/data/instance-id"
+      - "/static/resource:/static/resource"
+      - "/static/formdata/pro:/static/formdata/pro"
+      - "/sbin/dmidecode:/sbin/dmidecode"
+    depends_on:
+      - mysql
+    links: 
+      - "mysql:mysql"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    devices:
+      - "/dev/mem:/dev/mem"
+    cap_add:
+      - sys_rawio
+    logging:
+      driver: "none"
+  nginx:
+    image: registry.cn-hangzhou.aliyuncs.com/cloudm/nginx:v1
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - "/data/logs/nginx:/var/log/nginx/"
+      - "/data/ssl:/data/ssl"
+      - "/static/resource:/static/resource"
+      - "/static/formdata/pro:/static/formdata/pro"
+    logging:
+      driver: "none"

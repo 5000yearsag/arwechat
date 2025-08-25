@@ -5,9 +5,10 @@
         <block wx:if="{{item.type === 'video'}}">
           <xr-asset-load
             type="video-texture"
-            asset-id="{{item.type}}_{{item.sceneUuid}}"
+            asset-id="video_{{item.sceneUuid}}"
             options="loop:true"
             src="{{item.arResourceUrl}}"
+            defer="{{loadType === 1}}"
           />
           <xr-asset-material
             wx:if="{{item.videoEffect === 'tsbs'}}"
@@ -19,7 +20,7 @@
             wx:else
             asset-id="mat_{{item.sceneUuid}}"
             effect="simple"
-            uniforms="u_baseColorMap:video-video_{{item.sceneUuid}}"
+            uniforms="u_baseColorMap: video-video_{{item.sceneUuid}}"
           />
         </block>
         <block wx:elif="{{item.type === 'model'}}">
@@ -28,6 +29,7 @@
             asset-id="model_{{item.sceneUuid}}"
             src="{{item.arResourceUrl}}"
             options="ignoreError: 10602"
+            defer="{{loadType === 1}}"
           />
         </block>
       </block>

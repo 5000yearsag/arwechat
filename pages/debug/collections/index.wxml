@@ -1,0 +1,39 @@
+<view class="debug-collections-page">
+  <view wx:if="{{loading && collections.length === 0}}" class="loading-wrap">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:elif="{{collections.length === 0}}" class="empty-wrap">
+    <text>{{errorMessage || '暂无合集数据'}}</text>
+  </view>
+
+  <scroll-view wx:else class="collections-scroll" scroll-y enable-back-to-top lower-threshold="50" bindscrolltolower="onLoadMore">
+    <view class="collections-grid">
+      <view 
+        wx:for="{{collections}}" 
+        wx:key="uuid" 
+        class="collection-card"
+        data-uuid="{{item.uuid}}"
+        data-name="{{item.collectionName}}"
+        bindtap="onCollectionTap"
+      >
+        <view class="card-cover">
+          <image src="{{item.coverImgUrl || '/assets/logo.png'}}" mode="aspectFill" lazy-load />
+        </view>
+        <view class="card-info">
+          <text class="card-title">{{item.collectionName}}</text>
+          <text class="card-uuid">{{item.uuid}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view wx:if="{{hasMore}}" class="load-more">
+      <text wx:if="{{loadingMore}}">加载更多...</text>
+      <text wx:else>上拉加载更多</text>
+    </view>
+    
+    <view wx:if="{{!hasMore && collections.length > 0}}" class="no-more">
+      <text>没有更多数据了</text>
+    </view>
+  </scroll-view>
+</view>

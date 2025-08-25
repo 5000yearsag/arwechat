@@ -1,9 +1,13 @@
 <view class="recorder-wrap">
-  <view class="recorder-trigger">
+  <canvas id="myCanvas" type="2d" style="position: absolute; visibility: hidden; width: 885px; height: 1595px; z-index: -999; left: 1000px;"></canvas>
+  <view class="{{hideBtn ? 'recorder-trigger recorder-trigger-hide' : 'recorder-trigger'}}" bind:tap="handleTap">
     <view class="record-core {{status === 3 ? 'rect' : 'circle'}}"></view>
   </view>
-  <view class="label">
+  <!-- <view class="label">
     <mp-loading wx:if="{{status === 2 || status === 4}}" class="label-loading" show type="dot-white" tips=""></mp-loading>
     <text>{{label}}</text>
+  </view> -->
+  <view class="{{hideBtn ? 'btn btn-rotate' : 'btn'}}">
+    <image bind:tap="handleBtn" mode="aspectFill" src="./images/jt1.png" />
   </view>
 </view>

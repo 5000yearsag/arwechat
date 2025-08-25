@@ -1,0 +1,13 @@
+{
+  "name": "arwechat-miniprogram",
+  "version": "1.0.0",
+  "description": "AR微信小程序",
+  "scripts": {
+    "upload": "node upload.js",
+    "upload:version": "node upload.js",
+    "preview": "node upload.js preview"
+  },
+  "dependencies": {
+    "miniprogram-ci": "^2.1.26"
+  }
+}

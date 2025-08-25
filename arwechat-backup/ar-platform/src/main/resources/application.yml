@@ -1,0 +1,53 @@
+# Tomcat
+server:
+  port: 9091
+
+spring:
+  # 环境 dev|test|pro
+  profiles:
+    active: dev
+  # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      maxFileSize: 104857600 #100MB
+      maxRequestSize: 104857600 #100MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher  #解决swaggerUI不匹配接口
+
+swagger:
+  enable: true
+  title: vr-platform API
+  description: API 描述
+  version: 5.0.0
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+logging:
+  level:
+    org.springframework.web: info
+    com.github.binarywang.demo.wx.miniapp: info
+    cn.binarywang.wx.miniapp: info
+
+wx:
+  miniapp:
+    configs:
+      - appid: 'wxe7b4faed5d067dd6'
+        secret: '49168bb05bf2a42f382c59191e0d9b74'
+        token: '@token'
+        aesKey: '@aesKey'
+        msgDataFormat: '@msgDataFormat'
+
+
+
+
+
+
+

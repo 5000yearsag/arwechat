@@ -18,7 +18,7 @@
         {
           "name": "场景参数生产",
           "pathName": "pages/index/index",
-          "query": "url=https%3A%2F%2Fyaoculture.shenyuantek.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D250529211435008",
+          "query": "url=https%3A%2F%2Fapp.lanyuxr.com%2Fapi%2Fguest%2FgetAllSceneByCollection%3FcollectionUuid%3D250529211435008",
           "launchMode": "default",
           "scene": null
         },

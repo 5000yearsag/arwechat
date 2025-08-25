@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ardb
+    password: LtHenC6MFTRt6GPe
+    url: jdbc:mysql://123.57.231.35:3306/ardb?characterEncoding=utf8&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+
+file:
+  env: trial
+  server:
+    path: /usr/local/www/yaoculture/file/collection/
+    ip: http://123.57.231.35:8011/
+
+wx:
+  request:
+    url: http://123.57.231.35:8081/api/guest/getAllSceneByCollection
+
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: aliyun-oss-1 #默认使用的存储平台
+    aliyun-oss:
+      - platform: aliyun-oss-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: LTAI5tGryWYdwStSk6StoQPu
+        secret-key: TFQEbHHuce10Rr1XMXZI5h7bwsr89R
+        end-point: oss-cn-beijing.aliyuncs.com
+        bucket-name: beijingxr
+        domain: https://beijingxr.oss-cn-beijing.aliyuncs.com/
+        base-path: test/ # 基础路径
+    tencent-cos:
+      - platform: tencent-cos-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        secret-id: AKIDCDAvTnywjIhuvWzFHArPkxzucCrX7c2L
+        secret-key: E0LZhcJn4C9x1zriOvNi1DGFNXZVF0iO
+        region: ap-beijing #存仓库所在地域
+        bucket-name: yao-1300735383
+        domain: https://yao-1300735383.cos.ap-beijing.myqcloud.com/ # 访问域名，注意“/”结尾，例如：https://abc.cos.ap-nanjing.myqcloud.com/
+        base-path: test/ # 基础路径

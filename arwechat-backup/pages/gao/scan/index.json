@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "page-bg": "../../../components/page-bg/index",
+    "nav-bar": "../../../components/nav-bar/index",
+    "ar-base-tracker": "../../../components/ar/base/tracker",
+    "ar-recorder": "../../../components/ar/hud/recorder/index"
+  },
+  "navigationStyle": "custom",
+  "disableScroll": true
+}

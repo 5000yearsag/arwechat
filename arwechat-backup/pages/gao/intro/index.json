@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "page-bg": "../../../components/page-bg/index",
+    "nav-bar": "../../../components/nav-bar/index"
+  }
+}

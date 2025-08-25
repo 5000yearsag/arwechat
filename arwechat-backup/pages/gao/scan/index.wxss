@@ -1,0 +1,51 @@
+.scan-page .ar-nav-bar-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+}
+
+.scan-page .scan-page-loading {
+  width: 80%;
+  border-radius: 96rpx;
+  background-color: rgba(255, 255, 255, 0.65);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scan-page .scan-frame-wrap {
+  width: 514rpx;
+  height: 660rpx;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scan-page .scan-frame-wrap .tips {
+  position: absolute;
+  bottom: -64rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.65);
+  border-radius: 96rpx;
+
+  width: 514rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  line-height: 52rpx;
+  text-align: center;
+  letter-spacing: 0px;
+  color: #19191a;
+}
+
+.scan-page .ar-recorder-wrap {
+  position: fixed;
+  left: 50%;
+  bottom: 48rpx;
+  display: inline-flex;
+  transform: translateX(-50%);
+}

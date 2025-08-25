@@ -1,0 +1,39 @@
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.nav-bar .nav-bar-content {
+  height: 78rpx;
+  width: 100%;
+  padding: 15rpx 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-bar .nav-bar-back,
+.nav-bar .nav-bar-extra {
+  height: 48rpx;
+  width: 48rpx;
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-bar .nav-bar-text {
+  flex-grow: 1;
+  font-size: 56rpx;
+  font-weight: 200;
+  line-height: normal;
+  letter-spacing: 0px;
+  color: #000000;
+  text-align: center;
+}
+
+.nav-bar .nav-bar-bottom-line {
+  height: 2rpx;
+  margin: 0 20rpx;
+}

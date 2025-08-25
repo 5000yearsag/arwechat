@@ -1,3 +1,5 @@
+const appInstance = getApp();
+
 const IDLE_LABEL = "轻触拍照 长按摄影";
 const IDLE_CAPTURE_LABEL = "轻触拍照";
 const IDLE_RECORD_LABEL = "轻触摄影";
@@ -87,6 +89,23 @@ Component({
         await scene.share
           .captureToFriends({
             ...ShareCaptureDefaultOptions,
+          })
+          .then(() => {
+            // 分享成功后添加统计埋点
+            wx.request({
+              url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click3Count`,
+              method: "GET",
+              header: { "content-type": "application/json" },
+              success: (res) => {
+                console.log("拍照分享统计记录成功");
+              },
+              fail: (err) => {
+                console.error("拍照分享统计记录失败:", err);
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("截屏分享失败:", error);
           })
           .finally(() => {
             this.setData({

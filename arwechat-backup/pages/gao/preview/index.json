@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "ar-tracker": "../../../components/ar/tracker/index",
+    "ar-recorder": "../../../components/ar/hud/recorder/index"
+  },
+  "navigationStyle": "custom",
+  "disableScroll": true
+}

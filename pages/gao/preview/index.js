@@ -1,5 +1,7 @@
 import "../../../assets/effect/effect-tsbs";
 
+const appInstance = getApp();
+
 const timeForamter = (time) => {
   let hour = 0;
   let min = 0;
@@ -40,6 +42,12 @@ Page({
 
   recordTimer: null,
   onLoad() {
+    // 显示原生加载提示
+    wx.showLoading({
+      title: '正在加载数据...',
+      mask: true
+    });
+    
     const info = wx.getSystemInfoSync();
     const width = info.windowWidth;
     const height = info.windowHeight;
@@ -51,6 +59,7 @@ Page({
       renderWidth: width * dpi,
       renderHeight: height * dpi,
     });
+    
   },
 
   onUnload() {
@@ -63,12 +72,33 @@ Page({
     this.setData({
       arTrackerReady: true,
     });
+    
+    const appInstance = getApp();
+    const loadType = appInstance.globalData.loadType || 0;
+    
+    // 普通加载模式：AR框架准备完成后显示资源加载提示
+    if (loadType === 0) {
+      wx.showLoading({
+        title: 'AR资源加载中...',
+        mask: true
+      });
+    } else {
+      // 分段加载模式：AR框架准备完成后隐藏初始加载提示
+      wx.hideLoading();
+    }
   },
 
   handleArAssetsLoaded() {
     this.setData({
       arAssetsLoaded: true,
     });
+    
+    // 普通加载模式下，资源加载完成后隐藏加载提示
+    const appInstance = getApp();
+    const loadType = appInstance.globalData.loadType || 0;
+    if (loadType === 0) {
+      wx.hideLoading();
+    }
   },
 
   handleCatchAsset({ detail }) {
@@ -83,6 +113,21 @@ Page({
       if (recorderEl && recorderEl.handleRecord) {
         recorderEl.handleRecord(this.scene);
       }
+    }
+  },
+
+  recordFinished({ detail } = {}) {
+    clearInterval(this.recordTimer);
+    this.setData({
+      navTitle: "",
+    });
+    
+    const tempVideoFilePath = detail;
+    if (tempVideoFilePath) {
+      this.setData({
+        showShareVideoDialog: true,
+        shareVideoFilePath: tempVideoFilePath,
+      });
     }
   },
 
@@ -104,6 +149,31 @@ Page({
     }
   },
 
+  hideShareVideoDialog() {
+    this.setData({
+      showShareVideoDialog: false,
+    });
+  },
+  
+  shareVideoToMessage() {
+    this.hideShareVideoDialog();
+    if (this.data.shareVideoFilePath) {
+      wx.shareVideoMessage({
+        videoPath: this.data.shareVideoFilePath,
+        success: () => {
+          // 分享成功后记录统计
+          wx.request({
+            url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click4Count`,
+            method: "GET",
+            header: { "content-type": "application/json" },
+            success: (res) => {},
+            fail: (err) => {}
+          });
+        },
+        fail: (e) => {},
+      });
+    }
+  },
 
   recordStarted() {
     clearInterval(this.recordTimer);
@@ -116,7 +186,6 @@ Page({
   },
 
   recordFinished({ detail } = {}) {
-    console.log("停止录屏recordFinished", detail);
     clearInterval(this.recordTimer);
     const tempVideoFilePath = detail;
     if (tempVideoFilePath) {
@@ -133,9 +202,22 @@ Page({
   },
   shareVideoToMessage() {
     this.hideShareVideoDialog();
+    
+    // 记录录屏分享统计
+    wx.request({
+      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=click4Count`,
+      method: "GET",
+      header: { "content-type": "application/json" },
+      success: (res) => {},
+      fail: (err) => {}
+    });
+    
     if (this.data.shareVideoFilePath) {
       wx.shareVideoMessage({
         videoPath: this.data.shareVideoFilePath,
+        success: () => {},
+        fail: (e) => {},
+        complete: () => {}
       });
     }
   },
