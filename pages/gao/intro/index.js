@@ -72,17 +72,11 @@ Page({
     debugClickCount: 0, // 调试模式点击计数
   },
   onLoad(query) {
-    // 首先设置globalData中的collectionUuid
+    // 首先设置globalData中的collectionUuid（临时默认值）
     const defaultCollectionUuid = this.data.collectionUuid;
     appInstance.globalData.collectionUuid = defaultCollectionUuid;
     
-    // 埋点统计 - 页面访问
-    wx.request({
-      url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=pvCount`,
-      method: "GET",
-      header: { "content-type": "application/json" },
-      success: (res) => {}
-    })
+    // 注意：pvCount统计将在API成功回调后执行，使用正确的collectionUuid
 
     // 如果没有url参数，构造默认的API URL
     if (!query.url) {
@@ -114,6 +108,10 @@ Page({
 
         // 全局数据globalData缓存场景列表
         if (appInstance && appInstance.globalData) {
+          // 重要：更新正确的collectionUuid到globalData
+          if (collectionUuid) {
+            appInstance.globalData.collectionUuid = collectionUuid;
+          }
           appInstance.globalData.sceneList = [];
           // 设置shareImgUrl，避免截屏功能出错
           appInstance.globalData.shareImgUrl = sceneInfo?.shareImgUrl || "";
@@ -122,6 +120,14 @@ Page({
           
           console.log('设置加载类型 loadType:', appInstance.globalData.loadType);
           console.log('加载类型说明:', appInstance.globalData.loadType === 0 ? '普通加载（立即加载所有资源）' : '分段加载（识别后加载资源）');
+          
+          // 埋点统计 - 页面访问（使用正确的collectionUuid）
+          wx.request({
+            url: `${appInstance.globalData.domainWithProtocol}${appInstance.globalData.statisticApi}?collectionUuid=${appInstance.globalData.collectionUuid}&type=pvCount`,
+            method: "GET",
+            header: { "content-type": "application/json" },
+            success: (res) => {}
+          })
           
           const _sceneInfoList = (sceneList || [])
             .filter((item) => !!item.sceneImgUrl && !!item.arResourceUrl)
